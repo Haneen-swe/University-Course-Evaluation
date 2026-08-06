@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/shared/lib/api';
-import { Plus, Trash2, UserCheck, UserX } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 
 export function UsersPage() {
   const qc = useQueryClient();
@@ -13,7 +13,14 @@ export function UsersPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['users', search, roleFilter],
-    queryFn: () => api.get<{ success: true; data: any[] }>(`/users?search=${search}&role=${roleFilter}`).then(r => r.data.data),
+    queryFn: () => {
+      const params = new URLSearchParams();
+      if (search) params.set('search', search);
+      if (roleFilter) params.set('role', roleFilter);
+      return api
+        .get<{ success: true; data: any[] }>(`/users?${params.toString()}`)
+        .then((r) => r.data.data);
+    },
   });
 
   const deleteMutation = useMutation({

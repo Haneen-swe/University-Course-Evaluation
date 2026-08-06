@@ -29,7 +29,7 @@
       "statements": 80
     }
   },
-  "setupFilesAfterFramework": [],
+  "setupFilesAfterEnv": [],
   "globalSetup": "./tests/setup/globalSetup.ts",
   "globalTeardown": "./tests/setup/globalTeardown.ts"
 }

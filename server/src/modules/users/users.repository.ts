@@ -59,8 +59,8 @@ export const usersRepository = {
     return prisma.user.create({ data, select: userSelect });
   },
 
-  update(id: string, data: { firstName?: string; lastName?: string; departmentId?: string | null; isActive?: boolean }) {
-    return prisma.user.update({ where: { id }, data, select: userSelect });
+  update(id: string, data: { firstName?: string; lastName?: string; role?: string; departmentId?: string | null; isActive?: boolean }) {
+    return prisma.user.update({ where: { id }, data: data as any, select: userSelect });
   },
 
   softDelete(id: string) {

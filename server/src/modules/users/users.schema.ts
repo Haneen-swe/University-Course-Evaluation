@@ -18,6 +18,7 @@ export const createUserSchema = z.object({
 export const updateUserSchema = z.object({
   firstName: z.string().min(1).max(100).optional(),
   lastName: z.string().min(1).max(100).optional(),
+  role: z.enum(['student', 'instructor', 'dept_head', 'admin']).optional(),
   departmentId: z.string().uuid().optional().nullable(),
   isActive: z.boolean().optional(),
 });

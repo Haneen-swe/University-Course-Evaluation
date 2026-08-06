@@ -86,6 +86,7 @@ authRouter.post(
  */
 authRouter.post(
   '/reset-password',
+  passwordResetLimiter,
   validate(resetPasswordSchema),
   authController.resetPassword
 );

@@ -42,9 +42,16 @@ export const authRepository = {
     });
   },
 
+  /**
+   * Find a single user whose hashed reset token matches the raw token.
+   * Uses a time-safe approach: fetch all unexpired tokens, then bcrypt-compare
+   * in application code. The set of unexpired tokens is always very small
+   * (one per user per hour), so this is safe and avoids storing the raw token.
+   */
   findByValidResetToken() {
     return prisma.user.findMany({
       where: {
+        passwordResetToken: { not: null },
         passwordResetExpires: { gt: new Date() },
         deletedAt: null,
       },

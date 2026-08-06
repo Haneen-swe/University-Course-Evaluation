@@ -1,9 +1,15 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  // When VITE_API_URL is empty (Docker dev), proxy /api to the service name;
+  // otherwise use the explicit URL (native dev with localhost).
+  const apiTarget = env.VITE_API_URL || 'http://api:3001';
+
+  return {
   plugins: [react()],
   resolve: {
     alias: {
@@ -14,7 +20,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: apiTarget,
         changeOrigin: true,
       },
     },
@@ -25,4 +31,5 @@ export default defineConfig({
     setupFiles: './src/test/setup.ts',
     css: true,
   },
+  };
 });

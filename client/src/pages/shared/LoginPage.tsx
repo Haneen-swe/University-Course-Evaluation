@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { authApi } from '@/features/auth/api';
 import { useAuthStore } from '@/features/auth/store';
 import type { Role } from '@/features/auth/store';
@@ -71,7 +71,7 @@ export function LoginPage() {
           <div className="mb-6">
             <div className="flex justify-between items-center mb-1">
               <label htmlFor="password" className="block text-sm font-medium">Password</label>
-              <a href="/forgot-password" className="text-xs text-primary hover:underline">Forgot password?</a>
+              <Link to="/forgot-password" className="text-xs text-primary hover:underline">Forgot password?</Link>
             </div>
             <input
               id="password"

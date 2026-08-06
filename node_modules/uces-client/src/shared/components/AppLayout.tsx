@@ -3,8 +3,8 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/features/auth/store';
 import { authApi } from '@/features/auth/api';
 import {
-  LayoutDashboard, BookOpen, ClipboardList, BarChart3,
-  Users, Settings, LogOut, Menu, X, FileText, Bell, Shield
+  LayoutDashboard, BookOpen, ClipboardList,
+  Users, LogOut, Menu, X, FileText, Bell, Shield
 } from 'lucide-react';
 
 type NavItem = { label: string; href: string; icon: React.ReactNode };

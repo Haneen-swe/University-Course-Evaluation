@@ -1,5 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
-import { AppError } from '../../../src/shared/errors/AppError';
+import { AppError } from '../../src/shared/errors/AppError';
 
 describe('AppError', () => {
   it('creates error with correct properties', () => {

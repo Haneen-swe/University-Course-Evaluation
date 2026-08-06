@@ -1,5 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
-import { parsePagination, buildPaginatedResult } from '../../../src/shared/utils/pagination';
+import { parsePagination, buildPaginatedResult } from '../../src/shared/utils/pagination';
 
 describe('pagination utils', () => {
   describe('parsePagination()', () => {

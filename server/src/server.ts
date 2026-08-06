@@ -13,14 +13,10 @@ async function startServer() {
     await prisma.$connect();
     logger.info('✅  Database connected');
 
-    // Verify Redis connection
-   // Verify Redis connection (optional)
-try {
-  await redis.ping();
-  logger.info('✅ Redis connected');
-} catch {
-  logger.warn('⚠️ Redis is not running, continuing without Redis');
-}
+    // Verify Redis connection — mandatory: JWT deny-listing requires Redis
+    await redis.ping();
+    logger.info('✅  Redis connected');
+
     const server = app.listen(env.PORT, () => {
       logger.info(`🚀  UCES API running on port ${env.PORT} [${env.NODE_ENV}]`);
       logger.info(`📚  API docs: http://localhost:${env.PORT}/api/docs`);

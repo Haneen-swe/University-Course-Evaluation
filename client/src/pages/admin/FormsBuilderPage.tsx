@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/shared/lib/api';
-import { BookOpen, Eye } from 'lucide-react';
 
 export function FormsBuilderPage() {
   const qc = useQueryClient();

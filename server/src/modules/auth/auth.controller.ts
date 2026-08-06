@@ -3,17 +3,18 @@ import { authService } from './auth.service';
 import { LoginDto, ForgotPasswordDto, ResetPasswordDto } from './auth.schema';
 import { env } from '../../config/env';
 
+// In production: SameSite=None + Secure so the cookie is sent on cross-origin API requests.
+// In development: SameSite=Lax is sufficient (same-site or top-level navigations).
 const REFRESH_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
+  sameSite: (env.NODE_ENV === 'production' ? 'none' : 'lax') as 'none' | 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
 };
 
 export const authController = {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(' Login request received:', req.body);
       const dto = req.body as LoginDto;
       const { accessToken, refreshToken, user } = await authService.login(
         dto.email,

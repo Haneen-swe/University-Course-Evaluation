@@ -19,15 +19,30 @@ export function EvaluationWindowsPage() {
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['offerings'] }); setEditing(null); },
   });
 
+  const [releaseError, setReleaseError] = useState<string | null>(null);
+
   const releaseMutation = useMutation({
     mutationFn: ({ id, release }: { id: string; release: boolean }) =>
       api.put(`/offerings/${id}/release`, { resultsReleased: release }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['offerings'] }),
+    onSuccess: () => {
+      setReleaseError(null);
+      qc.invalidateQueries({ queryKey: ['offerings'] });
+    },
+    onError: (e: any) => {
+      setReleaseError(
+        e?.response?.data?.error?.message ?? 'Failed to update results visibility.'
+      );
+    },
   });
 
   return (
     <div className="max-w-5xl mx-auto space-y-5">
       <h1 className="text-2xl font-bold">Evaluation Windows</h1>
+      {releaseError && (
+        <div className="p-3 bg-destructive/10 border border-destructive/20 rounded text-sm text-destructive" role="alert">
+          {releaseError}
+        </div>
+      )}
       <div className="space-y-3">
         {isLoading && <p className="text-sm text-muted-foreground">Loading…</p>}
         {offerings?.map((o: any) => (

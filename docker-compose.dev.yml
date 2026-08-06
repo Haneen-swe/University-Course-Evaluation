@@ -44,7 +44,10 @@ services:
     ports:
       - "5173:5173"
     environment:
-      VITE_API_URL: http://localhost:3001
+      # Leave VITE_API_URL empty so the Vite dev-server proxy (vite.config.ts /api → api:3001)
+      # handles routing. Setting it to http://localhost:3001 would resolve inside the container
+      # (not the host), breaking API calls when Vite runs in Docker.
+      VITE_API_URL: ""
     volumes:
       - ./client:/app:delegated
       - /app/node_modules
