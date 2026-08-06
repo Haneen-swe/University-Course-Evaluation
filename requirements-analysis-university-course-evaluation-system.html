@@ -1,0 +1,552 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Requirements Analysis — University Course Evaluation System</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1f2328;
+    background: #ffffff;
+    padding: 32px 16px 48px;
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* ── Cover ── */
+  .cover {
+    border: 1px solid #e5e7eb;
+    background: #f7f8fa;
+    border-radius: 6px;
+    padding: 32px 36px;
+    margin-bottom: 36px;
+  }
+  .cover .label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #57606a;
+    margin-bottom: 8px;
+  }
+  .cover h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2328;
+    margin-bottom: 4px;
+  }
+  .cover h2 {
+    font-size: 15px;
+    font-weight: 400;
+    color: #57606a;
+    margin-bottom: 20px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    font-size: 13px;
+  }
+  .meta-grid dt { color: #57606a; }
+  .meta-grid dd { font-weight: 600; }
+
+  /* ── Sections ── */
+  section { margin-bottom: 36px; }
+  h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #57606a;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f2328;
+    margin: 18px 0 8px;
+  }
+  p { margin-bottom: 10px; color: #1f2328; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+  th {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td { border: 1px solid #e5e7eb; padding: 8px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  /* ── Requirement cards ── */
+  .req-block { margin-bottom: 28px; }
+  .req-id {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    background: #3b82d4;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-right: 6px;
+    letter-spacing: .04em;
+  }
+  .req-id.nfr { background: #7c5cd8; }
+  .req-id.con { background: #57606a; }
+  .req-title { font-weight: 600; font-size: 14px; }
+  .req-desc { color: #1f2328; margin: 4px 0 0 0; font-size: 13px; }
+
+  /* ── Priority badge ── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 1px 8px;
+    margin-left: 8px;
+  }
+  .high   { background: #fee2e2; color: #991b1b; }
+  .medium { background: #fef9c3; color: #854d0e; }
+  .low    { background: #dcfce7; color: #166534; }
+
+  /* ── Use-case diagram (SVG) ── */
+  .uc-wrap { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px; margin-bottom: 16px; overflow-x: auto; }
+
+  /* ── Callout ── */
+  .callout {
+    background: #f7f8fa;
+    border-left: 3px solid #3b82d4;
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    margin-bottom: 12px;
+    color: #1f2328;
+  }
+  .callout.warn { border-color: #f59e0b; }
+  .callout.purple { border-color: #7c5cd8; }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 48px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 12px;
+    color: #57606a;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="cover">
+    <div class="label">Software Development Life Cycle · Phase 1 of 6</div>
+    <h1>University Course Evaluation System</h1>
+    <h2>Requirements Analysis Document (RAD)</h2>
+    <dl class="meta-grid">
+      <dt>Document Version</dt><dd>1.0</dd>
+      <dt>Phase</dt><dd>Requirements Analysis</dd>
+      <dt>Status</dt><dd>Awaiting Approval</dd>
+      <dt>Methodology</dt><dd>Structured SDLC (Waterfall-Agile Hybrid)</dd>
+      <dt>Responsible AI</dt><dd>Privacy-first · Anonymity-guaranteed</dd>
+    </dl>
+  </div>
+
+  
+  <section>
+    <h3>1 · Introduction &amp; Project Scope</h3>
+    <p>The <strong>University Course Evaluation System (UCES)</strong> is a web-based platform that enables students to submit structured, anonymous evaluations of courses and instructors at the end of each academic term. The collected data is aggregated and made available to academic administrators, department heads, and (optionally) faculty members to drive continuous improvement in course quality and teaching effectiveness.</p>
+    <p>This document captures the complete set of <em>functional</em>, <em>non-functional</em>, and <em>constraint</em> requirements, identifies all stakeholders, defines the system boundary, and provides use-case coverage sufficient to move to system design.</p>
+    <div class="callout">
+      The system shall comply with academic data-privacy regulations (e.g., FERPA in the US, PDPA equivalents) and must guarantee the anonymity of all student responses before any data is persisted or queried.
+    </div>
+  </section>
+
+  
+  <section>
+    <h3>2 · Stakeholder Identification</h3>
+    <table>
+      <thead>
+        <tr><th>Stakeholder</th><th>Role in UCES</th><th>Primary Concern</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Student</strong></td><td>Evaluation submitter</td><td>Simple, anonymous submission; confirmation of receipt</td></tr>
+        <tr><td><strong>Instructor / Faculty</strong></td><td>Subject of evaluation</td><td>Access to aggregated (not raw) feedback; fairness</td></tr>
+        <tr><td><strong>Department Head</strong></td><td>Reviewer of department results</td><td>Comparative course &amp; instructor analytics within department</td></tr>
+        <tr><td><strong>Academic Administrator</strong></td><td>System-wide oversight</td><td>Institution-wide reports; compliance; evaluation window management</td></tr>
+        <tr><td><strong>IT / System Admin</strong></td><td>Operator</td><td>Uptime, security, user provisioning, data backup</td></tr>
+        <tr><td><strong>University Management</strong></td><td>Sponsor / decision maker</td><td>ROI, accreditation evidence, strategic decisions</td></tr>
+        <tr><td><strong>Regulatory / Accreditation Body</strong></td><td>External auditor</td><td>Data integrity, compliance, audit trails</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  
+  <section>
+    <h3>3 · Functional Requirements</h3>
+    <div class="callout purple">FR = Functional Requirement. Priority: High / Medium / Low.</div>
+
+    <h4>3.1 Authentication &amp; User Management</h4>
+    <div class="req-block">
+      <span class="req-id">FR-01</span><span class="req-title">User Login</span><span class="badge high">High</span>
+      <p class="req-desc">The system shall authenticate students, instructors, and administrators via institutional Single Sign-On (SSO) or username/password credentials secured with hashed storage.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-02</span><span class="req-title">Role-Based Access Control (RBAC)</span><span class="badge high">High</span>
+      <p class="req-desc">The system shall enforce four roles: <em>Student</em>, <em>Instructor</em>, <em>Department Head</em>, and <em>Admin</em>. Each role exposes only its permitted views and actions.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-03</span><span class="req-title">Password Recovery</span><span class="badge medium">Medium</span>
+      <p class="req-desc">The system shall support secure email-based password reset with time-limited tokens (≤ 60 minutes).</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-04</span><span class="req-title">User Provisioning</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Administrators shall be able to create, edit, deactivate, and delete user accounts. Bulk import via CSV shall be supported.</p>
+    </div>
+
+    <h4>3.2 Course &amp; Enrollment Management</h4>
+    <div class="req-block">
+      <span class="req-id">FR-05</span><span class="req-title">Course Catalogue</span><span class="badge high">High</span>
+      <p class="req-desc">Administrators shall be able to create, update, and archive courses with attributes: course code, title, credits, department, and assigned instructor(s).</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-06</span><span class="req-title">Term / Semester Management</span><span class="badge high">High</span>
+      <p class="req-desc">The system shall support academic term records (e.g., Fall 2024). Each course offering is linked to exactly one term.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-07</span><span class="req-title">Student Enrollment</span><span class="badge high">High</span>
+      <p class="req-desc">Students shall be enrolled in course offerings. Only enrolled students may evaluate a given course offering. Enrollment data may be imported from SIS (Student Information System) via API or CSV.</p>
+    </div>
+
+    <h4>3.3 Evaluation Form Builder</h4>
+    <div class="req-block">
+      <span class="req-id">FR-08</span><span class="req-title">Form Template Management</span><span class="badge high">High</span>
+      <p class="req-desc">Administrators shall be able to design evaluation form templates composed of configurable question blocks. A template is reusable across multiple course offerings.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-09</span><span class="req-title">Question Types</span><span class="badge high">High</span>
+      <p class="req-desc">The system shall support at minimum: (a) Likert scale (1–5 or 1–10), (b) multiple-choice (single answer), (c) multiple-choice (multi-select), and (d) open-ended text.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-10</span><span class="req-title">Mandatory vs Optional Questions</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Form designers shall be able to mark any question as mandatory. The submission workflow shall enforce completion of all mandatory questions.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-11</span><span class="req-title">Evaluation Window Configuration</span><span class="badge high">High</span>
+      <p class="req-desc">Administrators shall set an open/close date-time window per course offering. Outside this window, submission is not permitted.</p>
+    </div>
+
+    <h4>3.4 Evaluation Submission</h4>
+    <div class="req-block">
+      <span class="req-id">FR-12</span><span class="req-title">Anonymous Submission</span><span class="badge high">High</span>
+      <p class="req-desc">Student identity shall be decoupled from response data at the point of storage. A one-way token records participation status (to prevent duplicate submission) without linking the token to the response content.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-13</span><span class="req-title">Draft &amp; Resume</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Students shall be able to save a partial response as a draft and resume submission within the evaluation window.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-14</span><span class="req-title">Duplicate Submission Prevention</span><span class="badge high">High</span>
+      <p class="req-desc">Each enrolled student may submit exactly one final evaluation per course offering. Attempts to re-submit shall be rejected after final submission.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-15</span><span class="req-title">Submission Confirmation</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Upon successful final submission, the student shall receive an in-app confirmation and optional email receipt (containing no response content).</p>
+    </div>
+
+    <h4>3.5 Results &amp; Analytics</h4>
+    <div class="req-block">
+      <span class="req-id">FR-16</span><span class="req-title">Aggregated Course Report</span><span class="badge high">High</span>
+      <p class="req-desc">The system shall generate per-course-offering reports showing: response rate, mean/median/standard deviation per Likert question, frequency distribution charts, and open-text responses (anonymised).</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-17</span><span class="req-title">Instructor Summary Report</span><span class="badge high">High</span>
+      <p class="req-desc">Department heads and admins shall view aggregated instructor performance across all their course offerings for a selected term.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-18</span><span class="req-title">Department &amp; Institution Dashboard</span><span class="badge high">High</span>
+      <p class="req-desc">A role-appropriate dashboard shall display KPIs: overall response rate, top/bottom-rated courses, trend lines across terms, and department comparison tables.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-19</span><span class="req-title">Export</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Reports shall be exportable as PDF and CSV. Open-text responses shall be excluded from CSV exports by default to reduce re-identification risk.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-20</span><span class="req-title">Result Release Control</span><span class="badge high">High</span>
+      <p class="req-desc">Admins shall control whether instructors can view their own results, and optionally enforce a minimum response threshold (e.g., ≥ 5 responses) before results are revealed.</p>
+    </div>
+
+    <h4>3.6 Notifications</h4>
+    <div class="req-block">
+      <span class="req-id">FR-21</span><span class="req-title">Evaluation Open Notification</span><span class="badge medium">Medium</span>
+      <p class="req-desc">The system shall send an automated email/in-app notification to enrolled students when an evaluation window opens.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-22</span><span class="req-title">Reminder Notification</span><span class="badge low">Low</span>
+      <p class="req-desc">Configurable reminders shall be sent to students who have not yet submitted, at a configurable number of days before window close.</p>
+    </div>
+
+    <h4>3.7 Audit &amp; Compliance</h4>
+    <div class="req-block">
+      <span class="req-id">FR-23</span><span class="req-title">Audit Log</span><span class="badge high">High</span>
+      <p class="req-desc">All administrative actions (user changes, form edits, window modifications, result releases) shall be persisted in a tamper-evident audit log with timestamp and actor identity.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id">FR-24</span><span class="req-title">Data Retention Policy</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Admins shall configure retention periods per data category. The system shall support scheduled anonymisation or deletion of expired data.</p>
+    </div>
+  </section>
+
+  
+  <section>
+    <h3>4 · Non-Functional Requirements</h3>
+    <div class="callout purple">NFR = Non-Functional Requirement.</div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-01</span><span class="req-title">Performance</span><span class="badge high">High</span>
+      <p class="req-desc">Page load time shall not exceed 2 seconds under normal load. The system shall handle at least 1,000 concurrent evaluation submissions without degradation.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-02</span><span class="req-title">Availability</span><span class="badge high">High</span>
+      <p class="req-desc">The system shall target 99.5% uptime, especially during evaluation windows. Scheduled maintenance shall be performed outside peak periods.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-03</span><span class="req-title">Security</span><span class="badge high">High</span>
+      <p class="req-desc">All data in transit shall use TLS 1.2+. Passwords shall be hashed with bcrypt (cost ≥ 12). The application shall be hardened against OWASP Top-10 vulnerabilities (SQL injection, XSS, CSRF, broken auth, etc.).</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-04</span><span class="req-title">Privacy &amp; Anonymity</span><span class="badge high">High</span>
+      <p class="req-desc">Student response data and student identity shall be stored in logically separated tables/schemas. No query path shall allow correlation of a specific response to a specific student after submission is finalised.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-05</span><span class="req-title">Scalability</span><span class="badge medium">Medium</span>
+      <p class="req-desc">The architecture shall be horizontally scalable (stateless application tier, shared database tier) to support institutions with up to 50,000 enrolled students.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-06</span><span class="req-title">Usability</span><span class="badge high">High</span>
+      <p class="req-desc">The UI shall be responsive (mobile-first), accessible (WCAG 2.1 AA), and operable in modern browsers (Chrome, Firefox, Safari, Edge — last 2 major versions).</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-07</span><span class="req-title">Maintainability</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Code shall follow documented coding standards. Unit test coverage shall be ≥ 80% for business-logic modules. API endpoints shall be documented via OpenAPI 3.0.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-08</span><span class="req-title">Internationalisation</span><span class="badge low">Low</span>
+      <p class="req-desc">The UI framework shall support i18n from day one; initial language is English. Arabic support shall be achievable without architectural changes.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id nfr">NFR-09</span><span class="req-title">Audit Integrity</span><span class="badge medium">Medium</span>
+      <p class="req-desc">Audit log records shall be append-only; no update or delete operation shall be permitted on the audit table by the application role.</p>
+    </div>
+  </section>
+
+  
+  <section>
+    <h3>5 · Use-Case Summary</h3>
+    <div class="uc-wrap">
+      
+      <svg width="700" height="390" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,'Segoe UI',sans-serif" font-size="11">
+        
+        <rect x="120" y="20" width="560" height="360" rx="8" fill="#f7f8fa" stroke="#e5e7eb" stroke-width="1.5"></rect>
+        <text x="395" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#57606a">University Course Evaluation System</text>
+
+        
+        
+        <circle cx="42" cy="80" r="14" fill="none" stroke="#3b82d4" stroke-width="1.5"></circle>
+        <line x1="42" y1="94" x2="42" y2="120" stroke="#3b82d4" stroke-width="1.5"></line>
+        <line x1="26" y1="105" x2="58" y2="105" stroke="#3b82d4" stroke-width="1.5"></line>
+        <line x1="42" y1="120" x2="28" y2="138" stroke="#3b82d4" stroke-width="1.5"></line>
+        <line x1="42" y1="120" x2="56" y2="138" stroke="#3b82d4" stroke-width="1.5"></line>
+        <text x="42" y="150" text-anchor="middle" fill="#1f2328" font-weight="600">Student</text>
+
+        
+        <circle cx="42" cy="195" r="14" fill="none" stroke="#7c5cd8" stroke-width="1.5"></circle>
+        <line x1="42" y1="209" x2="42" y2="235" stroke="#7c5cd8" stroke-width="1.5"></line>
+        <line x1="26" y1="220" x2="58" y2="220" stroke="#7c5cd8" stroke-width="1.5"></line>
+        <line x1="42" y1="235" x2="28" y2="253" stroke="#7c5cd8" stroke-width="1.5"></line>
+        <line x1="42" y1="235" x2="56" y2="253" stroke="#7c5cd8" stroke-width="1.5"></line>
+        <text x="42" y="265" text-anchor="middle" fill="#1f2328" font-weight="600">Instructor</text>
+
+        
+        <circle cx="42" cy="310" r="14" fill="none" stroke="#57606a" stroke-width="1.5"></circle>
+        <line x1="42" y1="324" x2="42" y2="350" stroke="#57606a" stroke-width="1.5"></line>
+        <line x1="26" y1="335" x2="58" y2="335" stroke="#57606a" stroke-width="1.5"></line>
+        <line x1="42" y1="350" x2="28" y2="368" stroke="#57606a" stroke-width="1.5"></line>
+        <line x1="42" y1="350" x2="56" y2="368" stroke="#57606a" stroke-width="1.5"></line>
+        <text x="42" y="380" text-anchor="middle" fill="#1f2328" font-weight="600">Admin</text>
+
+        
+        <ellipse cx="240" cy="68" rx="90" ry="18" fill="#fff" stroke="#3b82d4" stroke-width="1"></ellipse>
+        <text x="240" y="72" text-anchor="middle" fill="#1f2328">UC-01 Login / SSO</text>
+        <line x1="56" y1="80" x2="150" y2="68" stroke="#3b82d4" stroke-width="1"></line>
+
+        <ellipse cx="240" cy="112" rx="90" ry="18" fill="#fff" stroke="#3b82d4" stroke-width="1"></ellipse>
+        <text x="240" y="116" text-anchor="middle" fill="#1f2328">UC-02 View Pending Evals</text>
+        <line x1="56" y1="82" x2="150" y2="112" stroke="#3b82d4" stroke-width="1"></line>
+
+        <ellipse cx="240" cy="156" rx="90" ry="18" fill="#fff" stroke="#3b82d4" stroke-width="1"></ellipse>
+        <text x="240" y="160" text-anchor="middle" fill="#1f2328">UC-03 Submit Evaluation</text>
+        <line x1="56" y1="84" x2="150" y2="154" stroke="#3b82d4" stroke-width="1"></line>
+
+        
+        <ellipse cx="450" cy="90" rx="100" ry="18" fill="#fff" stroke="#7c5cd8" stroke-width="1"></ellipse>
+        <text x="450" y="94" text-anchor="middle" fill="#1f2328">UC-04 View Own Reports</text>
+        <line x1="56" y1="198" x2="350" y2="92" stroke="#7c5cd8" stroke-width="1"></line>
+
+        <ellipse cx="450" cy="136" rx="100" ry="18" fill="#fff" stroke="#7c5cd8" stroke-width="1"></ellipse>
+        <text x="450" y="140" text-anchor="middle" fill="#1f2328">UC-05 Export Course Report</text>
+        <line x1="56" y1="200" x2="350" y2="136" stroke="#7c5cd8" stroke-width="1"></line>
+
+        
+        <ellipse cx="350" cy="210" rx="100" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="350" y="214" text-anchor="middle" fill="#1f2328">UC-06 Manage Users</text>
+        <line x1="56" y1="312" x2="250" y2="212" stroke="#57606a" stroke-width="1"></line>
+
+        <ellipse cx="350" cy="252" rx="100" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="350" y="256" text-anchor="middle" fill="#1f2328">UC-07 Manage Courses/Terms</text>
+        <line x1="56" y1="314" x2="250" y2="252" stroke="#57606a" stroke-width="1"></line>
+
+        <ellipse cx="350" cy="295" rx="100" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="350" y="299" text-anchor="middle" fill="#1f2328">UC-08 Design Eval Forms</text>
+        <line x1="56" y1="316" x2="250" y2="295" stroke="#57606a" stroke-width="1"></line>
+
+        <ellipse cx="560" cy="210" rx="108" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="560" y="214" text-anchor="middle" fill="#1f2328">UC-09 Configure Eval Windows</text>
+        <line x1="56" y1="318" x2="452" y2="212" stroke="#57606a" stroke-width="1"></line>
+
+        <ellipse cx="560" cy="252" rx="108" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="560" y="256" text-anchor="middle" fill="#1f2328">UC-10 View Dashboards</text>
+        <line x1="56" y1="320" x2="452" y2="252" stroke="#57606a" stroke-width="1"></line>
+
+        <ellipse cx="560" cy="295" rx="108" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="560" y="299" text-anchor="middle" fill="#1f2328">UC-11 Manage Audit Logs</text>
+        <line x1="56" y1="322" x2="452" y2="295" stroke="#57606a" stroke-width="1"></line>
+
+        <ellipse cx="450" cy="345" rx="108" ry="18" fill="#fff" stroke="#57606a" stroke-width="1"></ellipse>
+        <text x="450" y="349" text-anchor="middle" fill="#1f2328">UC-12 Release / Restrict Results</text>
+        <line x1="56" y1="324" x2="342" y2="345" stroke="#57606a" stroke-width="1"></line>
+      </svg>
+    </div>
+
+    <table>
+      <thead><tr><th>UC ID</th><th>Use Case</th><th>Primary Actor</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>UC-01</td><td>Login / SSO</td><td>All roles</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-02</td><td>View Pending Evaluations</td><td>Student</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-03</td><td>Submit Evaluation (with draft support)</td><td>Student</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-04</td><td>View Own Aggregated Reports</td><td>Instructor</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-05</td><td>Export Course Report (PDF/CSV)</td><td>Instructor, Dept. Head, Admin</td><td><span class="badge medium">Medium</span></td></tr>
+        <tr><td>UC-06</td><td>Manage Users (CRUD + CSV import)</td><td>Admin</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-07</td><td>Manage Courses, Offerings, Terms</td><td>Admin</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-08</td><td>Design &amp; Version Evaluation Forms</td><td>Admin</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-09</td><td>Configure Evaluation Windows</td><td>Admin</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-10</td><td>View Dashboards &amp; Trend Analytics</td><td>Dept. Head, Admin</td><td><span class="badge high">High</span></td></tr>
+        <tr><td>UC-11</td><td>View &amp; Export Audit Logs</td><td>Admin</td><td><span class="badge medium">Medium</span></td></tr>
+        <tr><td>UC-12</td><td>Release / Restrict Results to Instructors</td><td>Admin</td><td><span class="badge high">High</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  
+  <section>
+    <h3>6 · Constraints &amp; Boundary Conditions</h3>
+    <div class="req-block">
+      <span class="req-id con">CON-01</span><span class="req-title">Technology Stack</span>
+      <p class="req-desc">The system shall be implemented as a web application. No native mobile app is in scope for v1.0.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id con">CON-02</span><span class="req-title">Data Residency</span>
+      <p class="req-desc">All data shall remain within the institution's own server infrastructure or a compliant cloud region as mandated by the institution.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id con">CON-03</span><span class="req-title">Anonymity Guarantee</span>
+      <p class="req-desc">No feature shall be built that allows any user — including system administrators — to reverse-map a submitted response to a specific student after finalisation.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id con">CON-04</span><span class="req-title">Minimum Response Threshold</span>
+      <p class="req-desc">Results for a course shall not be visible to the assigned instructor until the configurable minimum response count is met, to further protect anonymity.</p>
+    </div>
+    <div class="req-block">
+      <span class="req-id con">CON-05</span><span class="req-title">Academic Calendar Dependency</span>
+      <p class="req-desc">Evaluation windows are tied to the academic calendar. The system shall not auto-open windows; manual or scheduled activation by an admin is required.</p>
+    </div>
+  </section>
+
+  
+  <section>
+    <h3>7 · Assumptions</h3>
+    <ul>
+      <li>The university has an existing directory service (LDAP / Active Directory or OAuth provider) that UCES can integrate with for SSO.</li>
+      <li>A Student Information System (SIS) exists and can provide enrollment data via CSV export or REST API.</li>
+      <li>All users have access to institutional email addresses for notifications and password recovery.</li>
+      <li>The initial deployment targets a single institution; multi-tenancy is a future enhancement.</li>
+      <li>Evaluation forms are designed by admins; the system does not use AI to auto-generate questions (Responsible AI boundary).</li>
+      <li>Open-text feedback will not be processed by AI sentiment analysis in v1.0 to avoid privacy and bias risks.</li>
+    </ul>
+  </section>
+
+  
+  <section>
+    <h3>8 · Responsible AI Considerations</h3>
+    <div class="callout warn">This section documents AI-risk mitigations applicable to UCES to ensure ethical, fair, and transparent operation.</div>
+    <table>
+      <thead><tr><th>Principle</th><th>Application to UCES</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Privacy</strong></td><td>Student responses are anonymised at storage time. No analytics query can identify individual respondents.</td></tr>
+        <tr><td><strong>Fairness</strong></td><td>Evaluation forms apply uniformly to all courses. Minimum response thresholds prevent statistically unreliable (and potentially biased) results from influencing instructor reviews.</td></tr>
+        <tr><td><strong>Transparency</strong></td><td>Students are informed at submission time what their data will be used for and who can access aggregated results.</td></tr>
+        <tr><td><strong>Accountability</strong></td><td>All administrative actions are logged in a tamper-evident audit trail. Any result release decision is attributed to a named admin.</td></tr>
+        <tr><td><strong>Non-maleficence</strong></td><td>AI-driven sentiment analysis or performance scoring of instructors is explicitly out of scope for v1.0 to prevent algorithmic bias affecting employment decisions.</td></tr>
+        <tr><td><strong>Data Minimisation</strong></td><td>Only data strictly necessary for evaluation purposes is collected. No tracking of device fingerprints, IP addresses, or session behaviour beyond authentication needs.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  
+  <section>
+    <h3>9 · Requirements Traceability Matrix (Summary)</h3>
+    <p style="color:#57606a;font-size:13px">A full RTM will be maintained in the project artefacts and updated at each SDLC phase gate.</p>
+    <table>
+      <thead><tr><th>Requirement ID</th><th>Use Case(s)</th><th>Priority</th><th>Phase Targeted</th></tr></thead>
+      <tbody>
+        <tr><td>FR-01, FR-02, FR-03</td><td>UC-01</td><td>High</td><td>Sprint 1</td></tr>
+        <tr><td>FR-04</td><td>UC-06</td><td>Medium</td><td>Sprint 1</td></tr>
+        <tr><td>FR-05, FR-06, FR-07</td><td>UC-07</td><td>High</td><td>Sprint 1</td></tr>
+        <tr><td>FR-08, FR-09, FR-10, FR-11</td><td>UC-08, UC-09</td><td>High</td><td>Sprint 2</td></tr>
+        <tr><td>FR-12, FR-13, FR-14, FR-15</td><td>UC-02, UC-03</td><td>High</td><td>Sprint 2</td></tr>
+        <tr><td>FR-16, FR-17, FR-18, FR-19, FR-20</td><td>UC-04, UC-05, UC-10, UC-12</td><td>High/Med</td><td>Sprint 3</td></tr>
+        <tr><td>FR-21, FR-22</td><td>UC-03</td><td>Medium/Low</td><td>Sprint 3</td></tr>
+        <tr><td>FR-23, FR-24</td><td>UC-11</td><td>High/Med</td><td>Sprint 3</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  
+  <section>
+    <h3>10 · SDLC Phase Roadmap</h3>
+    <table>
+      <thead><tr><th>#</th><th>Phase</th><th>Key Deliverables</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Requirements Analysis</strong></td><td>RAD, Stakeholder map, RTM stub, Use-case diagram</td><td style="color:#166534;font-weight:600">In Review</td></tr>
+        <tr><td>2</td><td>System Design</td><td>Architecture diagram, DB schema, API contract, UI wireframes</td><td style="color:#57606a">Pending Approval</td></tr>
+        <tr><td>3</td><td>Implementation</td><td>Full-stack source code, unit tests, CI pipeline</td><td style="color:#57606a">Pending</td></tr>
+        <tr><td>4</td><td>Testing &amp; QA</td><td>Test plan, test cases, bug report, coverage report</td><td style="color:#57606a">Pending</td></tr>
+        <tr><td>5</td><td>Deployment</td><td>Deployment guide, Docker/CI config, environment runbooks</td><td style="color:#57606a">Pending</td></tr>
+        <tr><td>6</td><td>Maintenance &amp; Review</td><td>Post-deployment review, changelog, future roadmap</td><td style="color:#57606a">Pending</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

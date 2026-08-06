@@ -1,0 +1,142 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Phase 2 Complete — System Design</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.6;color:#1f2328;background:#fff;padding:28px 16px 48px}
+  .page{max-width:760px;margin:0 auto}
+  .cover{border:1px solid #e5e7eb;background:#f7f8fa;border-radius:6px;padding:28px 32px;margin-bottom:32px}
+  .cover .label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#57606a;margin-bottom:6px}
+  .cover h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .cover h2{font-size:14px;font-weight:400;color:#57606a;margin-bottom:18px}
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap}
+  .badge{display:inline-block;font-size:11px;font-weight:700;border-radius:10px;padding:2px 10px}
+  .green{background:#dcfce7;color:#166534}
+  .blue{background:#dbeafe;color:#1e40af}
+  .purple{background:#f3e8ff;color:#6b21a8}
+  h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#57606a;border-bottom:1px solid #e5e7eb;padding-bottom:5px;margin:28px 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px}
+  th{background:#f7f8fa;border:1px solid #e5e7eb;padding:7px 10px;text-align:left;font-weight:600}
+  td{border:1px solid #e5e7eb;padding:7px 10px;vertical-align:top}
+  tr:nth-child(even) td{background:#fafafa}
+  .file{font-family:monospace;font-size:12px;color:#3b82d4}
+  .tick{color:#166534;font-weight:700}
+  .callout{background:#f0fdf4;border-left:3px solid #16a34a;padding:10px 14px;border-radius:0 4px 4px 0;font-size:13px;margin-bottom:16px}
+  .callout.info{background:#eff6ff;border-color:#3b82d4}
+  .arch-box{background:#f7f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:16px 20px;margin-bottom:16px}
+  .arch-box pre{font-size:12px;line-height:1.7;white-space:pre-wrap;color:#1f2328}
+  .privacy-box{background:#fff3cd;border:1px solid #856404;border-radius:6px;padding:14px 18px;margin-bottom:16px;font-size:13px}
+  .privacy-box strong{color:#854d0e}
+  footer{margin-top:48px;padding-top:12px;border-top:1px solid #e5e7eb;text-align:center;font-size:12px;color:#57606a}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="cover">
+    <div class="label">SDLC · Phase 2 of 6 · System Design</div>
+    <h1>University Course Evaluation System</h1>
+    <h2>System Design — Phase Complete</h2>
+    <div class="badge-row">
+      <span class="badge green">✓ 13 Documents Written</span>
+      <span class="badge blue">12 Design Areas Covered</span>
+      <span class="badge purple">Mermaid Diagrams Included</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    All 13 design artefacts have been written to <code>docs/phase-2-system-design/</code>. Every document is production-quality Markdown with Mermaid diagrams renderable in GitHub, VS Code, or mermaid.live.
+  </div>
+
+  <h3>Document Registry</h3>
+  <table>
+    <thead><tr><th>File</th><th>Design Area</th><th>Highlights</th></tr></thead>
+    <tbody>
+      <tr><td class="file">01-overall-system-architecture.md</td><td>Overall Architecture</td><td>3-tier diagram, 7 cross-cutting concerns, 7 ADRs</td></tr>
+      <tr><td class="file">02-frontend-architecture.md</td><td>Frontend</td><td>React 18 FSD structure, routing guards, axios interceptors, WCAG 2.1</td></tr>
+      <tr><td class="file">03-backend-architecture.md</td><td>Backend</td><td>4-layer module pattern, middleware pipeline, anonymity service, Redis strategy</td></tr>
+      <tr><td class="file">04-database-architecture.md</td><td>Database</td><td>12 tables fully specified, indexes, DB roles, backup RPO/RTO</td></tr>
+      <tr><td class="file">05-rest-api-design.md</td><td>REST API</td><td>60+ endpoints, request/response schemas, rate limits, pagination</td></tr>
+      <tr><td class="file">06-authentication-authorization.md</td><td>Auth &amp; AuthZ</td><td>JWT flows, RBAC matrix (4 roles × all actions), SSO, CSRF, headers</td></tr>
+      <tr><td class="file">07-er-diagram.md</td><td>ER Diagram</td><td>Full Mermaid ERD + privacy separation diagram + index summary</td></tr>
+      <tr><td class="file">08-sequence-diagrams.md</td><td>Sequence Diagrams</td><td>7 flows: login, anonymous submit, window config, result release, report view, refresh, password reset</td></tr>
+      <tr><td class="file">09-use-case-diagram.md</td><td>Use Case Diagram</td><td>32 use cases, Mermaid flowchart UCD, full UC table, UC-08 specification</td></tr>
+      <tr><td class="file">10-class-diagram.md</td><td>Class Diagram</td><td>Domain model + service layer + repository layer; TypeScript type constraints</td></tr>
+      <tr><td class="file">11-deployment-architecture.md</td><td>Deployment</td><td>Docker Compose (full YAML), Nginx config, GitHub Actions CI/CD pipeline</td></tr>
+      <tr><td class="file">12-technology-stack.md</td><td>Technology Stack</td><td>25 technologies justified; 9 alternatives rejected with reasons</td></tr>
+      <tr><td class="file">README.md</td><td>Master Index</td><td>Architecture summary, 10 key decisions, privacy diagram, phase gate checklist</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Architecture at a Glance</h3>
+  <div class="arch-box">
+    <pre>
+CLIENT     React 18 + TypeScript + Vite
+           Tailwind CSS + shadcn/ui (WCAG 2.1 AA)
+           React Query · Zustand · React Hook Form + Zod
+           ↕ HTTPS / REST / JWT
+SERVER     Node.js 20 + Express 5 + TypeScript + Prisma
+           Modules: Auth · Users · Courses · Evaluations
+                    Forms · Reports · Notifications · Audit
+           ↕ TCP / ORM
+DATA       PostgreSQL 16 (primary RDBMS)
+           Redis 7 (cache + BullMQ queue)
+           S3-compatible (PDF/CSV exports)
+INFRA      Nginx (TLS + static + reverse proxy)
+           Docker Compose · GitHub Actions CI/CD
+           Let's Encrypt (free TLS)</pre>
+  </div>
+
+  <h3>Core Privacy Architecture (Responsible AI)</h3>
+  <div class="privacy-box">
+    <strong>Anonymity is structural, not just policy.</strong><br /><br />
+    The <code>responses</code> table has <strong>no <code>student_id</code> column</strong>.<br />
+    The <code>participation_tokens</code> table records <em>whether</em> a student submitted — with no link to <em>what</em> they submitted.<br />
+    There is no foreign key, shared UUID, or derived field between the two tables.<br />
+    A database administrator cannot re-identify responses — because the join key does not exist.
+  </div>
+
+  <h3>Key Design Decisions</h3>
+  <table>
+    <thead><tr><th>Decision</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Anonymity enforced at schema level</td><td>Cannot be circumvented by application-layer bugs or admin SQL queries</td></tr>
+      <tr><td>JWT stateless auth + Redis deny-list</td><td>Scales horizontally; logout works without sticky sessions</td></tr>
+      <tr><td>4-layer module architecture (Router→Controller→Service→Repository)</td><td>Testable, single-responsibility; business logic never leaks into DB layer</td></tr>
+      <tr><td>Append-only audit log (INSERT-only DB role)</td><td>Tamper-evident by database privilege, not just application policy</td></tr>
+      <tr><td>Minimum response threshold before result release</td><td>Protects small-cohort student anonymity from statistical re-identification</td></tr>
+      <tr><td>Docker Compose single-server deployment</td><td>University-budget friendly; no Kubernetes overhead; portable to cloud</td></tr>
+      <tr><td>No AI scoring of instructors in v1.0</td><td>Prevents algorithmic bias influencing employment decisions (Responsible AI)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Phase Gate Status</h3>
+  <table>
+    <thead><tr><th>Requirement</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Overall system architecture documented</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Frontend architecture documented</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Backend architecture documented</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Database architecture fully specified</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>REST API endpoints defined (60+)</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Auth &amp; RBAC fully designed</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>ER Diagram (Mermaid)</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Sequence Diagrams (7 critical flows)</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Use Case Diagram (32 use cases)</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Class Diagram (domain + service + repo)</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Deployment architecture + Docker Compose</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Technology stack justified</td><td class="tick">✓ Complete</td></tr>
+      <tr><td>Responsible AI constraints preserved</td><td class="tick">✓ Complete</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    <strong>Next:</strong> Phase 3 — Implementation. Upon your approval, implementation begins with the monorepo setup, Prisma schema + migrations, all backend modules, the React SPA, Docker Compose dev environment, and seeded test data.
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

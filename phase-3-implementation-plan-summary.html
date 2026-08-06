@@ -1,0 +1,461 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Implementation Plan Summary — UCES</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.6;color:#1f2328;background:#fff;padding:28px 16px 56px}
+  .page{max-width:760px;margin:0 auto}
+
+  /* Cover */
+  .cover{border:1px solid #e5e7eb;background:#f7f8fa;border-radius:6px;padding:28px 32px;margin-bottom:32px}
+  .cover .label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#57606a;margin-bottom:6px}
+  .cover h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .cover h2{font-size:14px;font-weight:400;color:#57606a;margin-bottom:18px}
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap}
+  .badge{display:inline-block;font-size:11px;font-weight:700;border-radius:10px;padding:2px 10px}
+  .green{background:#dcfce7;color:#166534}
+  .blue{background:#dbeafe;color:#1e40af}
+  .purple{background:#f3e8ff;color:#6b21a8}
+  .amber{background:#fef3c7;color:#92400e}
+
+  /* Sections */
+  section{margin-bottom:36px}
+  h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#57606a;border-bottom:1px solid #e5e7eb;padding-bottom:5px;margin-bottom:14px}
+
+  /* Answer blocks */
+  .answer-block{margin-bottom:26px}
+  .q-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#3b82d4;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;margin-right:10px;vertical-align:middle}
+  .q-title{font-size:15px;font-weight:700;color:#1f2328;display:inline;vertical-align:middle}
+  .q-body{margin-top:10px;padding-left:36px}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:10px}
+  th{background:#f7f8fa;border:1px solid #e5e7eb;padding:7px 10px;text-align:left;font-weight:600}
+  td{border:1px solid #e5e7eb;padding:7px 10px;vertical-align:top}
+  tr:nth-child(even) td{background:#fafafa}
+
+  /* Code / mono */
+  code{font-family:Consolas,"Cascadia Code",monospace;font-size:12px;background:#f0f6ff;border:1px solid #dbeafe;border-radius:3px;padding:1px 5px;color:#1e40af}
+  pre{font-family:Consolas,"Cascadia Code",monospace;font-size:12px;background:#f7f8fa;border:1px solid #e5e7eb;border-radius:5px;padding:14px 16px;overflow-x:auto;line-height:1.7;color:#1f2328;margin-bottom:10px}
+
+  /* Callouts */
+  .callout{padding:10px 14px;border-radius:0 4px 4px 0;font-size:13px;margin-bottom:12px;color:#1f2328}
+  .callout.blue{background:#eff6ff;border-left:3px solid #3b82d4}
+  .callout.green{background:#f0fdf4;border-left:3px solid #16a34a}
+  .callout.amber{background:#fffbeb;border-left:3px solid #f59e0b}
+  .callout.purple{background:#faf5ff;border-left:3px solid #7c5cd8}
+
+  /* Tick */
+  .tick{color:#166534;font-weight:700}
+  .cross{color:#991b1b;font-weight:700}
+
+  /* Stack pill */
+  .pill{display:inline-block;font-size:11px;font-weight:600;border-radius:4px;padding:2px 8px;margin:2px;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+  .pill.be{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+  .pill.db{background:#f3e8ff;color:#6b21a8;border-color:#e9d5ff}
+  .pill.infra{background:#fef3c7;color:#92400e;border-color:#fde68a}
+
+  footer{margin-top:48px;padding-top:12px;border-top:1px solid #e5e7eb;text-align:center;font-size:12px;color:#57606a}
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="cover">
+    <div class="label">SDLC · Pre-Phase 3 Briefing</div>
+    <h1>University Course Evaluation System</h1>
+    <h2>Implementation Plan Summary — Awaiting Approval</h2>
+    <div class="badge-row">
+      <span class="badge blue">7 Questions Answered</span>
+      <span class="badge green">Grounded in Phase 2 Design Docs</span>
+      <span class="badge amber">No Code Generated Yet</span>
+    </div>
+  </div>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">1</span>
+      <span class="q-title">Frontend Framework</span>
+      <div class="q-body">
+        <div class="callout blue">
+          <strong>React 18</strong> with <strong>TypeScript 5</strong>, built and served by <strong>Vite 5</strong>.
+        </div>
+        <table>
+          <thead><tr><th>Layer</th><th>Library</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>UI Library</td><td><span class="pill">React 18</span></td><td>Component rendering, Suspense, concurrent features</td></tr>
+            <tr><td>Language</td><td><span class="pill">TypeScript 5</span></td><td>End-to-end type safety; shared types with backend</td></tr>
+            <tr><td>Build Tool</td><td><span class="pill">Vite 5</span></td><td>Sub-second HMR in dev; optimised production bundles</td></tr>
+            <tr><td>Routing</td><td><span class="pill">React Router v6</span></td><td>Nested layouts, lazy-loaded routes, role-based guards</td></tr>
+            <tr><td>Server State</td><td><span class="pill">TanStack Query v5</span></td><td>Data fetching, caching, background refetch</td></tr>
+            <tr><td>UI State</td><td><span class="pill">Zustand 4</span></td><td>Auth store, modal state — minimal boilerplate</td></tr>
+            <tr><td>Forms</td><td><span class="pill">React Hook Form</span> + <span class="pill">Zod</span></td><td>Performant forms; validation shared with backend</td></tr>
+            <tr><td>Styling</td><td><span class="pill">Tailwind CSS 3</span> + <span class="pill">shadcn/ui</span></td><td>Utility-first; WCAG 2.1 AA accessible components</td></tr>
+            <tr><td>Charts</td><td><span class="pill">Recharts 2</span></td><td>Likert distribution bars, trend lines, response rates</td></tr>
+            <tr><td>HTTP</td><td><span class="pill">Axios 1</span></td><td>Token injection + auto-refresh interceptors</td></tr>
+            <tr><td>i18n</td><td><span class="pill">i18next 23</span></td><td>English (v1); RTL-ready for future Arabic</td></tr>
+            <tr><td>Tests</td><td><span class="pill">Vitest</span> + <span class="pill">Playwright</span></td><td>Unit/component + E2E critical paths</td></tr>
+          </tbody>
+        </table>
+        <div class="callout amber">
+          <strong>Pattern:</strong> Feature-Sliced Design (FSD) — each feature (<code>auth/</code>, <code>evaluations/</code>, <code>reports/</code> …) owns its own components, hooks, and API calls. No cross-feature coupling.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">2</span>
+      <span class="q-title">Backend Framework</span>
+      <div class="q-body">
+        <div class="callout green">
+          <strong>Node.js 20 LTS</strong> + <strong>Express 5</strong> + <strong>TypeScript 5</strong>.
+        </div>
+        <table>
+          <thead><tr><th>Layer</th><th>Library</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>Runtime</td><td><span class="pill be">Node.js 20 LTS</span></td><td>Non-blocking I/O; supported until 2026</td></tr>
+            <tr><td>Framework</td><td><span class="pill be">Express 5</span></td><td>Routing, middleware pipeline, async error propagation</td></tr>
+            <tr><td>Language</td><td><span class="pill be">TypeScript 5</span></td><td>Compile-time safety; shared types with client</td></tr>
+            <tr><td>Validation</td><td><span class="pill be">Zod 3</span></td><td>Request body/query schemas; fail-fast at API boundary</td></tr>
+            <tr><td>Auth</td><td><span class="pill be">jsonwebtoken + bcrypt</span></td><td>JWT access/refresh tokens; password hashing (cost 12)</td></tr>
+            <tr><td>Cache</td><td><span class="pill be">ioredis 5</span></td><td>JWT deny-list, draft cache, rate limiting</td></tr>
+            <tr><td>Jobs</td><td><span class="pill be">BullMQ 4</span></td><td>Async notification queue (eval-open, reminders, results)</td></tr>
+            <tr><td>Email</td><td><span class="pill be">Nodemailer 6</span></td><td>SMTP relay; institution-configurable</td></tr>
+            <tr><td>Logging</td><td><span class="pill be">Winston 3</span></td><td>Structured JSON logs; per-request logging middleware</td></tr>
+            <tr><td>Security</td><td><span class="pill be">Helmet.js 7</span></td><td>CSP, HSTS, X-Frame-Options, nosniff headers</td></tr>
+            <tr><td>Rate Limit</td><td><span class="pill be">express-rate-limit 7</span></td><td>Redis-backed; per-IP sliding window</td></tr>
+            <tr><td>Exports</td><td><span class="pill be">pdfkit + csv-stringify</span></td><td>Report PDF/CSV generation; streamed to client</td></tr>
+            <tr><td>API Docs</td><td><span class="pill be">swagger-jsdoc + swagger-ui</span></td><td>Auto-generated OpenAPI 3.0 explorer at <code>/api/docs</code></td></tr>
+            <tr><td>Tests</td><td><span class="pill be">Jest + Supertest</span></td><td>Unit tests (service layer) + HTTP integration tests</td></tr>
+          </tbody>
+        </table>
+        <div class="callout amber">
+          <strong>Architecture pattern:</strong> Every module follows a strict 4-layer chain: <code>Router → Controller → Service → Repository</code>. Business logic lives exclusively in the Service layer. The Repository layer only calls Prisma — never Express.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">3</span>
+      <span class="q-title">Database</span>
+      <div class="q-body">
+        <div class="callout purple">
+          <strong>Primary:</strong> PostgreSQL 16  |  <strong>Cache / Queue:</strong> Redis 7  |  <strong>File exports:</strong> Local filesystem (S3-compatible in production)
+        </div>
+        <table>
+          <thead><tr><th>Store</th><th>Technology</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary RDBMS</strong></td>
+              <td><span class="pill db">PostgreSQL 16</span></td>
+              <td>ACID transactions (critical for anonymous submission atomicity); JSONB for question options; FK enforcement as second safety layer on anonymity; full-text search on audit logs; append-only table support via DB role privileges</td>
+            </tr>
+            <tr>
+              <td><strong>Cache + Queue</strong></td>
+              <td><span class="pill db">Redis 7</span></td>
+              <td>O(1) JWT deny-list lookups; TTL-managed evaluation drafts; BullMQ job queue storage; rate-limit counters; report cache (15 min TTL)</td>
+            </tr>
+            <tr>
+              <td><strong>File store</strong></td>
+              <td><span class="pill db">FS / S3</span></td>
+              <td>Generated PDF/CSV exports; mounted as Docker volume in dev; swappable to MinIO or AWS S3 in production with no code change</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:#57606a">The database contains <strong>12 tables</strong>: <code>users</code>, <code>departments</code>, <code>terms</code>, <code>courses</code>, <code>course_offerings</code>, <code>enrollments</code>, <code>eval_form_templates</code>, <code>eval_questions</code>, <code>participation_tokens</code>, <code>responses</code>, <code>audit_logs</code>, <code>notifications</code>.</p>
+        <div class="callout blue" style="margin-top:10px">
+          <strong>Privacy invariant:</strong> The <code>responses</code> table has <strong>no <code>student_id</code> column</strong>. The <code>participation_tokens</code> table has no <code>response_id</code> column. There is no join key between the two — anonymity is enforced at schema level, not policy.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">4</span>
+      <span class="q-title">ORM</span>
+      <div class="q-body">
+        <div class="callout green">
+          <strong>Prisma ORM 5</strong> — TypeScript-native, schema-first, with built-in migration tooling.
+        </div>
+        <table>
+          <thead><tr><th>Capability</th><th>How Prisma delivers it</th></tr></thead>
+          <tbody>
+            <tr><td>Type-safe queries</td><td>Client generated from <code>schema.prisma</code>; all queries are fully typed at compile time</td></tr>
+            <tr><td>Migrations</td><td><code>prisma migrate dev</code> (dev) and <code>prisma migrate deploy</code> (prod) — version-controlled SQL diffs</td></tr>
+            <tr><td>Schema as documentation</td><td><code>prisma/schema.prisma</code> is the single source of truth for the DB structure; readable by non-engineers</td></tr>
+            <tr><td>Transactions</td><td><code>prisma.$transaction([...])</code> used in the anonymous submission flow to atomically write responses + participation token</td></tr>
+            <tr><td>Dev tooling</td><td>Prisma Studio (visual DB browser) available at <code>localhost:5555</code> during development</td></tr>
+            <tr><td>SQL injection prevention</td><td>All queries go through parameterised Prisma client; no raw SQL except explicitly guarded <code>prisma.$queryRaw</code> calls</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">5</span>
+      <span class="q-title">Folder Structure</span>
+      <div class="q-body">
+        <div class="callout blue">The repository is a <strong>monorepo</strong> with two packages: <code>client/</code> (React SPA) and <code>server/</code> (Node.js API). A root-level <code>docker-compose.yml</code> and <code>docs/</code> folder sit alongside them.</div>
+        <pre>
+University-Course-Evaluation/          ← workspace root
+│
+├── client/                            ← React 18 SPA
+│   ├── public/
+│   └── src/
+│       ├── app/                       # App entry, router, providers
+│       ├── features/                  # Feature-Sliced Design
+│       │   ├── auth/                  #   components/ hooks/ api.ts store.ts
+│       │   ├── evaluations/           #   components/ hooks/ api.ts
+│       │   ├── courses/
+│       │   ├── forms-builder/
+│       │   ├── reports/
+│       │   ├── users/
+│       │   └── admin/
+│       ├── shared/                    # Reusable across features
+│       │   ├── components/            #   Button, Modal, Table, Badge…
+│       │   ├── hooks/                 #   useDebounce, usePagination
+│       │   ├── lib/                   #   axios instance, formatters
+│       │   └── types/                 #   Global TS interfaces
+│       └── pages/                     # Route-level page components
+│           ├── student/               #   Dashboard, EvaluationList, EvaluationPage
+│           ├── instructor/            #   Dashboard, ReportPage
+│           ├── admin/                 #   Users, Courses, FormBuilder, Audit…
+│           └── shared/                #   Login, NotFound
+│
+├── server/                            ← Node.js 20 + Express 5 API
+│   ├── src/
+│   │   ├── app.ts                     # Express factory
+│   │   ├── server.ts                  # HTTP entry point
+│   │   ├── modules/                   # Domain modules (all identical structure)
+│   │   │   ├── auth/                  #   router · controller · service · repository · schema
+│   │   │   ├── users/
+│   │   │   ├── courses/
+│   │   │   ├── terms/
+│   │   │   ├── enrollments/
+│   │   │   ├── forms/
+│   │   │   ├── evaluations/
+│   │   │   ├── responses/
+│   │   │   ├── reports/
+│   │   │   ├── notifications/
+│   │   │   └── audit/
+│   │   ├── middleware/                # authenticate · authorize · validate · rateLimiter · errorHandler
+│   │   ├── config/                    # env · database · redis · email
+│   │   └── shared/                    # AppError · utils · constants · types
+│   ├── prisma/
+│   │   ├── schema.prisma              # ← single source of DB truth
+│   │   ├── migrations/                # version-controlled SQL diffs
+│   │   └── seed.ts                    # dev seed data
+│   └── tests/
+│       ├── unit/                      # service-layer Jest tests
+│       └── integration/               # Supertest HTTP tests
+│
+├── docs/
+│   ├── phase-2-system-design/         # ← all 13 design docs (already written)
+│   └── phase-3-implementation/        # ← to be created in Phase 3
+│
+├── nginx/
+│   └── nginx.conf                     # reverse proxy + TLS + static files
+│
+├── docker-compose.yml                 # all services wired together
+├── docker-compose.dev.yml             # dev overrides (hot reload, ports)
+├── .env.example                       # documented environment variables
+├── .github/
+│   └── workflows/
+│       └── ci.yml                     # GitHub Actions CI/CD pipeline
+└── README.md                          # project-level overview</pre>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">6</span>
+      <span class="q-title">Docker — Optional or Required?</span>
+      <div class="q-body">
+        <table>
+          <thead><tr><th>Context</th><th>Docker status</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Local Development</strong></td>
+              <td><span class="badge amber">Strongly recommended</span></td>
+              <td><code>docker-compose.dev.yml</code> spins up Postgres + Redis automatically. Developers <em>can</em> run <code>npm run dev</code> directly if they have local Postgres and Redis installed, but Docker is the zero-friction path.</td>
+            </tr>
+            <tr>
+              <td><strong>CI Pipeline</strong></td>
+              <td><span class="badge amber">Required</span></td>
+              <td>GitHub Actions spins up a Postgres service container for integration tests. All test runs are containerised by default.</td>
+            </tr>
+            <tr>
+              <td><strong>Staging / Production</strong></td>
+              <td><span class="badge amber">Required</span></td>
+              <td>The entire production stack (Nginx + API + Worker + Postgres + Redis + Certbot) is defined in <code>docker-compose.yml</code>. Deployment is a single <code>docker compose up -d</code> command.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout amber">
+          <strong>Summary:</strong> Docker is <em>required for production and CI</em>, and <em>strongly recommended for development</em>. The codebase will also include a non-Docker <code>DEVELOPMENT.md</code> guide for developers who prefer native Node.js + local databases — so it is never a hard blocker.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <div class="answer-block">
+      <span class="q-num">7</span>
+      <span class="q-title">Deliverable Mapping to Competition Requirements</span>
+      <div class="q-body">
+        <div class="callout purple">Every deliverable below traces directly to a Phase 1 Functional Requirement, a Phase 2 design artefact, and a concrete Phase 3 code file.</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Competition Requirement</th>
+              <th>Phase 1 FR</th>
+              <th>Phase 2 Design Doc</th>
+              <th>Phase 3 Deliverable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>User authentication &amp; roles</strong></td>
+              <td>FR-01, FR-02, FR-03</td>
+              <td>06-authentication-authorization</td>
+              <td><code>server/modules/auth/</code> · JWT middleware · RBAC guard · Login/Logout pages</td>
+            </tr>
+            <tr>
+              <td><strong>Course &amp; enrollment management</strong></td>
+              <td>FR-05, FR-06, FR-07</td>
+              <td>04-database, 05-rest-api</td>
+              <td><code>server/modules/courses/</code> <code>terms/</code> <code>enrollments/</code> · Admin pages</td>
+            </tr>
+            <tr>
+              <td><strong>Evaluation form builder</strong></td>
+              <td>FR-08, FR-09, FR-10, FR-11</td>
+              <td>05-rest-api (§4.8), 10-class-diagram</td>
+              <td><code>server/modules/forms/</code> · <code>client/features/forms-builder/</code> · drag-reorder UI</td>
+            </tr>
+            <tr>
+              <td><strong>Anonymous evaluation submission</strong></td>
+              <td>FR-12, FR-13, FR-14, FR-15</td>
+              <td>08-sequence-diagrams (SD-02), 07-er-diagram (privacy separation)</td>
+              <td><code>server/modules/evaluations/</code> <code>responses/</code> · <code>client/pages/student/EvaluationPage</code> · Prisma transaction</td>
+            </tr>
+            <tr>
+              <td><strong>Aggregated reports &amp; analytics</strong></td>
+              <td>FR-16, FR-17, FR-18, FR-19, FR-20</td>
+              <td>05-rest-api (§4.10), 08-sequence-diagrams (SD-05)</td>
+              <td><code>server/modules/reports/</code> · Recharts dashboard pages · PDF/CSV export</td>
+            </tr>
+            <tr>
+              <td><strong>Notifications</strong></td>
+              <td>FR-21, FR-22</td>
+              <td>03-backend (§8), 08-sequence-diagrams (SD-03)</td>
+              <td><code>server/modules/notifications/</code> · BullMQ worker · Nodemailer</td>
+            </tr>
+            <tr>
+              <td><strong>Audit log</strong></td>
+              <td>FR-23, FR-24</td>
+              <td>04-database (§3.11), 06-auth (§10)</td>
+              <td><code>server/modules/audit/</code> · append-only DB privilege · Admin Audit Log page</td>
+            </tr>
+            <tr>
+              <td><strong>Role-specific dashboards</strong></td>
+              <td>FR-18, UC-10, UC-12</td>
+              <td>02-frontend (routing), 05-rest-api</td>
+              <td><code>client/pages/student/</code> <code>instructor/</code> <code>admin/</code> dashboards · PrivateRoute guard</td>
+            </tr>
+            <tr>
+              <td><strong>Data privacy &amp; security</strong></td>
+              <td>NFR-03, NFR-04, CON-03</td>
+              <td>06-auth, 07-er-diagram, 03-backend (§6)</td>
+              <td>Schema-enforced anonymity · Helmet · HTTPS · bcrypt · rate limiter · CSRF protection</td>
+            </tr>
+            <tr>
+              <td><strong>Responsive, accessible UI</strong></td>
+              <td>NFR-06</td>
+              <td>02-frontend (§7 Accessibility)</td>
+              <td>Tailwind mobile-first · shadcn/ui Radix primitives · WCAG 2.1 AA · aria-live regions</td>
+            </tr>
+            <tr>
+              <td><strong>Deployment-ready artifact</strong></td>
+              <td>NFR-02, NFR-05</td>
+              <td>11-deployment-architecture</td>
+              <td><code>docker-compose.yml</code> · Nginx config · <code>.env.example</code> · GitHub Actions CI/CD</td>
+            </tr>
+            <tr>
+              <td><strong>Tests &amp; coverage</strong></td>
+              <td>NFR-07 (≥80% business logic)</td>
+              <td>02-frontend (§9), 03-backend (§Jest)</td>
+              <td>Jest unit tests (service layer) · Supertest integration · Vitest + RTL component · Playwright E2E</td>
+            </tr>
+            <tr>
+              <td><strong>API documentation</strong></td>
+              <td>NFR-07</td>
+              <td>05-rest-api</td>
+              <td>OpenAPI 3.0 auto-generated at <code>/api/docs</code> via swagger-jsdoc</td>
+            </tr>
+            <tr>
+              <td><strong>SDLC documentation</strong></td>
+              <td>All phases</td>
+              <td>All Phase 2 docs</td>
+              <td><code>docs/phase-1/</code> RAD · <code>docs/phase-2/</code> 13 design docs · <code>docs/phase-3/</code> implementation notes</td>
+            </tr>
+            <tr>
+              <td><strong>Responsible AI compliance</strong></td>
+              <td>RAD §8</td>
+              <td>01-architecture, 07-er-diagram</td>
+              <td>Anonymity-by-schema · No AI scoring of instructors · Audit trail · Data minimisation · Threshold before result release</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <h3>Quick Reference — Implementation Decisions</h3>
+    <table>
+      <thead><tr><th>Decision Point</th><th>Answer</th></tr></thead>
+      <tbody>
+        <tr><td>Frontend framework</td><td><strong>React 18</strong> + TypeScript 5 + Vite 5</td></tr>
+        <tr><td>Styling</td><td><strong>Tailwind CSS 3</strong> + shadcn/ui (Radix primitives)</td></tr>
+        <tr><td>Backend framework</td><td><strong>Express 5</strong> on Node.js 20 LTS + TypeScript 5</td></tr>
+        <tr><td>Database</td><td><strong>PostgreSQL 16</strong> (primary) + Redis 7 (cache/queue)</td></tr>
+        <tr><td>ORM</td><td><strong>Prisma 5</strong> — schema-first, type-safe, migration tooling</td></tr>
+        <tr><td>Auth</td><td><strong>JWT</strong> (access 15 min + refresh 7 d in httpOnly cookie) + bcrypt cost 12</td></tr>
+        <tr><td>Monorepo structure</td><td><code>client/</code> + <code>server/</code> + <code>docs/</code> + <code>nginx/</code> at root</td></tr>
+        <tr><td>Docker</td><td><strong>Required for CI + production;</strong> strongly recommended for dev</td></tr>
+        <tr><td>Test coverage target</td><td>≥ 80% on business-logic service layer (Jest); Playwright for 3 E2E flows</td></tr>
+        <tr><td>API documentation</td><td>OpenAPI 3.0 auto-served at <code>/api/docs</code></td></tr>
+        <tr><td>Anonymous submission</td><td>Enforced at DB schema level — <code>responses</code> table has no <code>student_id</code> column</td></tr>
+        <tr><td>AI in v1.0</td><td>No AI features — Responsible AI boundary prevents instructor scoring bias</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="callout green">
+    <strong>Ready for Phase 3.</strong> Upon your approval, implementation begins in sequence: monorepo scaffolding → Prisma schema + migrations → backend modules → React SPA → Docker Compose environment → tests → CI/CD pipeline.
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

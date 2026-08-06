@@ -1,0 +1,292 @@
+// ──────────────────────────────────────────────────────────────
+//  UCES — Prisma Schema
+//  Single source of truth for the PostgreSQL 16 database.
+// ──────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enumerations ─────────────────────────────────────────────
+
+enum Role {
+  student
+  instructor
+  dept_head
+  admin
+}
+
+enum QuestionType {
+  likert
+  single_choice
+  multi_choice
+  open_text
+}
+
+enum NotificationType {
+  eval_open
+  eval_reminder
+  submission_confirm
+  result_released
+}
+
+enum NotificationChannel {
+  email
+  in_app
+}
+
+enum NotificationStatus {
+  pending
+  sent
+  failed
+}
+
+// ─── Core Identity ────────────────────────────────────────────
+
+model User {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email               String    @unique @db.VarChar(255)
+  passwordHash        String?   @map("password_hash") @db.VarChar(60)
+  firstName           String    @map("first_name") @db.VarChar(100)
+  lastName            String    @map("last_name") @db.VarChar(100)
+  role                Role
+  departmentId        String?   @map("department_id") @db.Uuid
+  isActive            Boolean   @default(true) @map("is_active")
+  passwordResetToken  String?   @map("password_reset_token") @db.VarChar(128)
+  passwordResetExpires DateTime? @map("password_reset_expires") @db.Timestamptz
+  createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt           DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  deletedAt           DateTime? @map("deleted_at") @db.Timestamptz
+
+  // Relations
+  department          Department?         @relation("UserDepartment", fields: [departmentId], references: [id])
+  headOfDepartment    Department[]        @relation("DepartmentHead")
+  courseOfferings     CourseOffering[]    @relation("InstructorOfferings")
+  enrollments         Enrollment[]
+  participationTokens ParticipationToken[]
+  formTemplates       EvalFormTemplate[]
+  auditLogs           AuditLog[]
+  notifications       Notification[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Department {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @unique @db.VarChar(200)
+  code      String   @unique @db.VarChar(20)
+  headId    String?  @map("head_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  head      User?    @relation("DepartmentHead", fields: [headId], references: [id])
+  users     User[]   @relation("UserDepartment")
+  courses   Course[]
+
+  @@map("departments")
+}
+
+// ─── Academic Structure ───────────────────────────────────────
+
+model Term {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @db.VarChar(100)
+  startDate DateTime @map("start_date") @db.Date
+  endDate   DateTime @map("end_date") @db.Date
+  isActive  Boolean  @default(false) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  offerings CourseOffering[]
+
+  @@map("terms")
+}
+
+model Course {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code         String   @db.VarChar(20)
+  title        String   @db.VarChar(255)
+  credits      Int      @db.SmallInt
+  departmentId String   @map("department_id") @db.Uuid
+  isArchived   Boolean  @default(false) @map("is_archived")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  department   Department       @relation(fields: [departmentId], references: [id])
+  offerings    CourseOffering[]
+
+  @@unique([code, departmentId])
+  @@map("courses")
+}
+
+model CourseOffering {
+  id                     String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  courseId               String    @map("course_id") @db.Uuid
+  termId                 String    @map("term_id") @db.Uuid
+  instructorId           String    @map("instructor_id") @db.Uuid
+  section                String    @default("A") @db.VarChar(20)
+  evalFormId             String?   @map("eval_form_id") @db.Uuid
+  evalWindowOpen         DateTime? @map("eval_window_open") @db.Timestamptz
+  evalWindowClose        DateTime? @map("eval_window_close") @db.Timestamptz
+  minResponsesThreshold  Int       @default(5) @map("min_responses_threshold") @db.SmallInt
+  resultsReleased        Boolean   @default(false) @map("results_released")
+  createdAt              DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt              DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  course              Course             @relation(fields: [courseId], references: [id])
+  term                Term               @relation(fields: [termId], references: [id])
+  instructor          User               @relation("InstructorOfferings", fields: [instructorId], references: [id])
+  evalForm            EvalFormTemplate?  @relation(fields: [evalFormId], references: [id])
+  enrollments         Enrollment[]
+  participationTokens ParticipationToken[]
+  responses           Response[]
+
+  @@unique([courseId, termId, section])
+  @@index([termId])
+  @@index([instructorId])
+  @@map("course_offerings")
+}
+
+model Enrollment {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  studentId  String   @map("student_id") @db.Uuid
+  offeringId String   @map("offering_id") @db.Uuid
+  enrolledAt DateTime @default(now()) @map("enrolled_at") @db.Timestamptz
+
+  // Relations
+  student  User           @relation(fields: [studentId], references: [id])
+  offering CourseOffering @relation(fields: [offeringId], references: [id])
+
+  @@unique([studentId, offeringId])
+  @@index([studentId])
+  @@index([offeringId])
+  @@map("enrollments")
+}
+
+// ─── Evaluation Forms ─────────────────────────────────────────
+
+model EvalFormTemplate {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String   @db.VarChar(255)
+  description String?  @db.Text
+  version     Int      @default(1) @db.SmallInt
+  isPublished Boolean  @default(false) @map("is_published")
+  createdBy   String   @map("created_by") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  creator   User             @relation(fields: [createdBy], references: [id])
+  questions EvalQuestion[]
+  offerings CourseOffering[]
+
+  @@map("eval_form_templates")
+}
+
+model EvalQuestion {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  templateId  String       @map("template_id") @db.Uuid
+  orderIndex  Int          @map("order_index") @db.SmallInt
+  type        QuestionType
+  text        String       @db.Text
+  isRequired  Boolean      @default(true) @map("is_required")
+  options     Json?        // Array of { value: string, label: string } for choice types
+  scaleMin    Int?         @map("scale_min") @db.SmallInt
+  scaleMax    Int?         @map("scale_max") @db.SmallInt
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime     @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  template  EvalFormTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  responses Response[]
+
+  @@index([templateId])
+  @@map("eval_questions")
+}
+
+// ─── Anonymous Responses ──────────────────────────────────────
+// PRIVACY INVARIANT:
+//   - ParticipationToken tracks THAT a student submitted (student_id present)
+//   - Response stores WHAT was submitted (NO student_id column)
+//   - There is NO join key between these two tables
+
+model ParticipationToken {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  studentId    String    @map("student_id") @db.Uuid
+  offeringId   String    @map("offering_id") @db.Uuid
+  submitted    Boolean   @default(false)
+  submittedAt  DateTime? @map("submitted_at") @db.Timestamptz
+  draftSavedAt DateTime? @map("draft_saved_at") @db.Timestamptz
+
+  // Relations
+  student  User           @relation(fields: [studentId], references: [id])
+  offering CourseOffering @relation(fields: [offeringId], references: [id])
+
+  @@unique([studentId, offeringId])
+  @@map("participation_tokens")
+}
+
+// NO student_id column — by design
+model Response {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  offeringId  String   @map("offering_id") @db.Uuid
+  questionId  String   @map("question_id") @db.Uuid
+  value       String   @db.Text
+  submittedAt DateTime @default(now()) @map("submitted_at") @db.Timestamptz
+
+  // Relations
+  offering CourseOffering @relation(fields: [offeringId], references: [id])
+  question EvalQuestion   @relation(fields: [questionId], references: [id])
+
+  @@index([offeringId, questionId])
+  @@map("responses")
+}
+
+// ─── System ───────────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorId    String   @map("actor_id") @db.Uuid
+  action     String   @db.VarChar(100)
+  targetType String?  @map("target_type") @db.VarChar(50)
+  targetId   String?  @map("target_id") @db.Uuid
+  metadata   Json?
+  ipAddress  String?  @map("ip_address") @db.VarChar(45)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  actor User @relation(fields: [actorId], references: [id])
+
+  @@index([actorId])
+  @@index([targetType, targetId])
+  @@index([createdAt(sort: Desc)])
+  @@map("audit_logs")
+}
+
+model Notification {
+  id        String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String              @map("user_id") @db.Uuid
+  type      NotificationType
+  channel   NotificationChannel
+  status    NotificationStatus  @default(pending)
+  sentAt    DateTime?           @map("sent_at") @db.Timestamptz
+  payload   Json?
+  createdAt DateTime            @default(now()) @map("created_at") @db.Timestamptz
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@map("notifications")
+}

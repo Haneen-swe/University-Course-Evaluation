@@ -1,0 +1,200 @@
+name: CI — UCES
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: "20"
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/uces-api
+
+jobs:
+  # ── 1. Lint ──────────────────────────────────────────────────
+  lint:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --workspace=server --workspace=client
+
+      - name: Lint server
+        run: npm run lint --workspace=server
+
+      - name: Lint client
+        run: npm run lint --workspace=client
+
+      - name: Typecheck server
+        run: npx tsc --noEmit --project server/tsconfig.json
+
+      - name: Typecheck client
+        run: npx tsc --noEmit --project client/tsconfig.json
+
+  # ── 2. Test (Server) ─────────────────────────────────────────
+  test-server:
+    name: Server Tests
+    runs-on: ubuntu-latest
+    needs: lint
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: uces_test
+          POSTGRES_USER: uces_app
+          POSTGRES_PASSWORD: testpassword
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --workspace=server
+
+      - name: Run migrations (test DB)
+        run: npx prisma migrate deploy
+        working-directory: server
+        env:
+          DATABASE_URL: postgresql://uces_app:testpassword@localhost:5432/uces_test
+
+      - name: Run tests with coverage
+        run: npm run test:coverage --workspace=server
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://uces_app:testpassword@localhost:5432/uces_test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret_must_be_at_least_32_chars
+          JWT_REFRESH_SECRET: test_refresh_secret_must_be_32_chars_min
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          flags: server
+          fail_ci_if_error: false
+
+  # ── 3. Test (Client) ─────────────────────────────────────────
+  test-client:
+    name: Client Tests
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --workspace=client
+
+      - name: Run unit/component tests
+        run: npm run test:coverage --workspace=client
+        env:
+          VITE_API_URL: http://localhost:3001
+
+  # ── 4. Build Docker image ────────────────────────────────────
+  build:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: [test-server, test-client]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+
+      - uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  # ── 5. Deploy to Staging ─────────────────────────────────────
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd /opt/uces
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f
+
+  # ── 6. Deploy to Production ──────────────────────────────────
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            cd /opt/uces
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker image prune -f

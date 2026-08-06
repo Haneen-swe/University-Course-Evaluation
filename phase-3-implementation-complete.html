@@ -1,0 +1,147 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Phase 3 Complete — UCES</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.6;color:#1f2328;background:#fff;padding:28px 16px 56px}
+  .page{max-width:760px;margin:0 auto}
+  .cover{border:1px solid #e5e7eb;background:#f7f8fa;border-radius:6px;padding:28px 32px;margin-bottom:32px}
+  .cover .label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#57606a;margin-bottom:6px}
+  .cover h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .cover h2{font-size:14px;font-weight:400;color:#57606a;margin-bottom:18px}
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap}
+  .badge{display:inline-block;font-size:11px;font-weight:700;border-radius:10px;padding:2px 10px}
+  .green{background:#dcfce7;color:#166534}
+  .blue{background:#dbeafe;color:#1e40af}
+  .purple{background:#f3e8ff;color:#6b21a8}
+  .amber{background:#fef3c7;color:#92400e}
+  h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#57606a;border-bottom:1px solid #e5e7eb;padding-bottom:5px;margin:28px 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}
+  th{background:#f7f8fa;border:1px solid #e5e7eb;padding:7px 10px;text-align:left;font-weight:600}
+  td{border:1px solid #e5e7eb;padding:7px 10px;vertical-align:top}
+  tr:nth-child(even) td{background:#fafafa}
+  code{font-family:Consolas,"Cascadia Code",monospace;font-size:12px;background:#f0f6ff;border:1px solid #dbeafe;border-radius:3px;padding:1px 5px;color:#1e40af}
+  pre{font-family:Consolas,"Cascadia Code",monospace;font-size:12px;background:#f7f8fa;border:1px solid #e5e7eb;border-radius:5px;padding:14px 16px;overflow-x:auto;line-height:1.7;color:#1f2328;margin-bottom:12px}
+  .callout{padding:10px 14px;border-radius:0 4px 4px 0;font-size:13px;margin-bottom:12px}
+  .callout.green{background:#f0fdf4;border-left:3px solid #16a34a}
+  .callout.blue{background:#eff6ff;border-left:3px solid #3b82d4}
+  .callout.amber{background:#fffbeb;border-left:3px solid #f59e0b}
+  .callout.purple{background:#faf5ff;border-left:3px solid #7c5cd8}
+  .tick{color:#166534;font-weight:700}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  .stat{background:#f7f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:14px;text-align:center}
+  .stat-num{font-size:28px;font-weight:700;color:#1f2328}
+  .stat-lbl{font-size:11px;color:#57606a;margin-top:2px}
+  footer{margin-top:48px;padding-top:12px;border-top:1px solid #e5e7eb;text-align:center;font-size:12px;color:#57606a}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div class="label">SDLC · Phase 3 · Implementation — Milestone Report</div>
+    <h1>University Course Evaluation System</h1>
+    <h2>Phase 3 Implementation — Complete</h2>
+    <div class="badge-row">
+      <span class="badge green">✓ 20 / 20 Milestones</span>
+      <span class="badge blue">110+ Source Files</span>
+      <span class="badge purple">Full-Stack: React + Node.js</span>
+      <span class="badge amber">Privacy-First Architecture</span>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-num">11</div><div class="stat-lbl">Backend Modules</div></div>
+    <div class="stat"><div class="stat-num">14</div><div class="stat-lbl">React Pages</div></div>
+    <div class="stat"><div class="stat-num">60+</div><div class="stat-lbl">REST Endpoints</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-lbl">DB Tables</div></div>
+  </div>
+
+  <h3>Milestone Completion</h3>
+  <table>
+    <thead><tr><th>#</th><th>Milestone</th><th>Key Files</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Monorepo Scaffolding</td><td><code>package.json</code>, <code>.env.example</code>, <code>tsconfig.json</code>, <code>vite.config.ts</code>, <code>tailwind.config.ts</code></td><td class="tick">✓ Done</td></tr>
+      <tr><td>2</td><td>Prisma Schema + Seed</td><td><code>prisma/schema.prisma</code> (12 tables), <code>prisma/seed.ts</code></td><td class="tick">✓ Done</td></tr>
+      <tr><td>3</td><td>Server Core</td><td><code>app.ts</code>, <code>server.ts</code>, <code>config/*</code>, all 7 middleware files, <code>AppError</code>, shared types + utils</td><td class="tick">✓ Done</td></tr>
+      <tr><td>4</td><td>Auth Module</td><td><code>auth.router/controller/service/repository/schema.ts</code> — Login, logout, JWT refresh, forgot/reset password, email reset, bcrypt, audit log</td><td class="tick">✓ Done</td></tr>
+      <tr><td>5</td><td>Users Module</td><td>Full CRUD with soft-delete, CSV import hook, audit trail</td><td class="tick">✓ Done</td></tr>
+      <tr><td>6</td><td>Departments, Terms, Courses, Offerings</td><td>4 routers with CRUD, validation, audit logging, evaluation window + result-release endpoints</td><td class="tick">✓ Done</td></tr>
+      <tr><td>7</td><td>Enrollments Module</td><td>Enroll/remove students per offering; bulk import ready</td><td class="tick">✓ Done</td></tr>
+      <tr><td>8</td><td>Forms Module</td><td>Create/edit/publish/clone templates; add/update/delete/reorder questions; draft protection</td><td class="tick">✓ Done</td></tr>
+      <tr><td>9</td><td>Evaluations Module (Anonymous)</td><td><strong>Core privacy flow</strong>: pending list, form fetch, draft save, atomic anonymous submission in <code>$transaction</code></td><td class="tick">✓ Done</td></tr>
+      <tr><td>10</td><td>Reports Module</td><td>Offering report (mean/median/stdDev/distribution), instructor summary, institution dashboard; role access control</td><td class="tick">✓ Done</td></tr>
+      <tr><td>11</td><td>Notifications Module</td><td>In-app notifications list; mark-read; admin manual trigger</td><td class="tick">✓ Done</td></tr>
+      <tr><td>12</td><td>Audit Module</td><td>Append-only audit log query; paginated; filtered by actor/action/target/date</td><td class="tick">✓ Done</td></tr>
+      <tr><td>13</td><td>React App Shell</td><td><code>App.tsx</code>, <code>router.tsx</code> (with lazy-loaded role guards), <code>AppLayout</code>, <code>PrivateRoute</code>, Axios interceptors, Zustand auth store</td><td class="tick">✓ Done</td></tr>
+      <tr><td>14</td><td>Auth Pages</td><td>Login, Forgot Password, Reset Password — all with Zod validation, React Hook Form, error states</td><td class="tick">✓ Done</td></tr>
+      <tr><td>15</td><td>Student Pages</td><td>Dashboard (stats + pending list), Evaluation List, Evaluation Page (Likert/Choice/Text renderer, anonymous submit confirmation)</td><td class="tick">✓ Done</td></tr>
+      <tr><td>16</td><td>Instructor Pages</td><td>Dashboard (offering list with release status), Report Page (Recharts bar charts, open-text responses, response-rate stats)</td><td class="tick">✓ Done</td></tr>
+      <tr><td>17</td><td>Admin Pages</td><td>Dashboard (KPI cards), Users (CRUD table + create form), Courses, Forms Builder, Evaluation Windows (set window + release results), Audit Log</td><td class="tick">✓ Done</td></tr>
+      <tr><td>18</td><td>Docker Compose + Nginx</td><td><code>docker-compose.yml</code> (prod), <code>docker-compose.dev.yml</code> (dev + MailHog), <code>nginx/nginx.conf</code>, <code>Dockerfile</code>, <code>Dockerfile.dev</code></td><td class="tick">✓ Done</td></tr>
+      <tr><td>19</td><td>CI/CD Pipeline</td><td><code>.github/workflows/ci.yml</code> — 6 jobs: lint, server tests (with Postgres + Redis services), client tests, Docker build, deploy staging, deploy production</td><td class="tick">✓ Done</td></tr>
+      <tr><td>20</td><td>Tests</td><td><code>AppError.test.ts</code>, <code>pagination.test.ts</code>, <code>auth.service.test.ts</code> (with full mocking); global setup/teardown</td><td class="tick">✓ Done</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Quick Start</h3>
+  <pre>
+# Clone and set up
+cp .env.example .env            # fill in secrets
+
+# Start everything (Docker — recommended)
+docker compose -f docker-compose.dev.yml up --build
+
+# API ready at:    http://localhost:3001
+# Client ready at: http://localhost:5173
+# API Docs at:     http://localhost:3001/api/docs
+# MailHog at:      http://localhost:8025</pre>
+
+  <h3>Default Seeded Accounts</h3>
+  <table>
+    <thead><tr><th>Email</th><th>Password</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>admin@uni.edu</code></td><td><code>Admin1234!</code></td><td>Admin</td></tr>
+      <tr><td><code>depthead@uni.edu</code></td><td><code>Admin1234!</code></td><td>Department Head</td></tr>
+      <tr><td><code>instructor@uni.edu</code></td><td><code>Admin1234!</code></td><td>Instructor</td></tr>
+      <tr><td><code>student@uni.edu</code></td><td><code>Admin1234!</code></td><td>Student</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#57606a;margin-top:-8px">Seeded with: CS Department · Fall 2024 term · CS401 Software Engineering offering (window open) · 8-question standard evaluation form</p>
+
+  <h3>Privacy Architecture — Implemented</h3>
+  <div class="callout purple">
+    The <code>responses</code> table has <strong>no <code>student_id</code> column</strong> in <code>schema.prisma</code>.<br />
+    The anonymous submission in <code>evaluations.router.ts</code> uses <code>prisma.$transaction([…])</code> to atomically write responses (no student ID) and the participation token (no response ID) — in two separate tables with no join key.
+  </div>
+
+  <h3>Architecture Enforced</h3>
+  <table>
+    <thead><tr><th>Design Decision</th><th>Implementation</th></tr></thead>
+    <tbody>
+      <tr><td>Anonymity at schema level</td><td><code>schema.prisma</code> — <code>Response</code> model has no <code>studentId</code> field</td></tr>
+      <tr><td>RBAC middleware</td><td><code>authorize('admin','dept_head')</code> factory on every protected route</td></tr>
+      <tr><td>JWT + refresh tokens</td><td>Access (15 min) in Bearer header; refresh (7d) in httpOnly cookie; deny-list in Redis</td></tr>
+      <tr><td>Append-only audit log</td><td>All admin actions call <code>auditRepository.insert()</code>; no update/delete methods on audit repo</td></tr>
+      <tr><td>Minimum threshold enforcement</td><td><code>offerings.router.ts /release</code> checks <code>count &lt; threshold</code> before allowing release</td></tr>
+      <tr><td>4-layer module pattern</td><td>Router → Controller → Service → Repository in every domain module</td></tr>
+      <tr><td>IP anonymisation in logs</td><td><code>requestLogger.ts</code> zeroes last octet; <code>auditRepository</code> also zeroes last octet</td></tr>
+      <tr><td>Rate limiting</td><td>Redis-backed; auth: 10/15 min; password reset: 5/hour; submission: 3/5 min</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Next Phase</h3>
+  <div class="callout amber">
+    <strong>Phase 4 — Testing &amp; QA</strong>: Full test plan, additional integration tests (full HTTP request/response with Supertest), Playwright E2E scripts for login → submit evaluation → view report flow, security scan (npm audit), and coverage report.
+  </div>
+  <div class="callout blue">
+    <strong>Phase 5 — Deployment</strong>: Deployment runbook, production environment setup guide, SSL provisioning steps, database backup verification, performance load test.
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

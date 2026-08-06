@@ -1,0 +1,97 @@
+version: "3.9"
+
+# Development overrides — hot-reload, exposed ports, seed on start
+services:
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgresql://uces_app:devpassword@postgres:5432/uces
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev_jwt_secret_not_for_production_use_32chars
+      JWT_REFRESH_SECRET: dev_refresh_secret_not_for_production_32c
+      JWT_ACCESS_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+      SMTP_SECURE: "false"
+      EMAIL_FROM: "UCES Dev <dev@uces.local>"
+      APP_URL: http://localhost:3001
+      CLIENT_URL: http://localhost:5173
+      LOG_LEVEL: debug
+      ENABLE_SWAGGER: "true"
+    volumes:
+      - ./server/src:/app/src:ro
+      - ./server/prisma:/app/prisma:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - uces_net
+
+  client:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host"
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:3001
+    volumes:
+      - ./client:/app:delegated
+      - /app/node_modules
+    networks:
+      - uces_net
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: uces
+      POSTGRES_USER: uces_app
+      POSTGRES_PASSWORD: devpassword
+    volumes:
+      - postgres_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U uces_app -d uces"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - uces_net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_dev:/data
+    networks:
+      - uces_net
+
+  # MailHog — catches all dev emails (no real emails sent)
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI at http://localhost:8025
+    networks:
+      - uces_net
+
+volumes:
+  postgres_dev:
+  redis_dev:
+
+networks:
+  uces_net:
+    driver: bridge
