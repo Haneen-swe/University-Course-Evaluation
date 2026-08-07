@@ -13,7 +13,7 @@ async function startServer() {
     await prisma.$connect();
     logger.info('✅  Database connected');
 
-    // Verify Redis connection — mandatory: JWT deny-listing requires Redis
+    // Verify Redis — mandatory: JWT deny-listing requires Redis to be available
     await redis.ping();
     logger.info('✅  Redis connected');
 

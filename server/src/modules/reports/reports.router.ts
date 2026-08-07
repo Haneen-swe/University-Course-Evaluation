@@ -75,7 +75,14 @@ reportsRouter.get('/offerings/:id', async (req: Request, res: Response, next: Ne
       if (q.type === 'single_choice' || q.type === 'multi_choice') {
         const distribution: Record<string, number> = {};
         qResponses.forEach((r) => {
-          const vals = q.type === 'multi_choice' ? r.value.split(',') : [r.value];
+          let vals: string[];
+          if (q.type === 'multi_choice') {
+            // Values are stored as a JSON array (e.g. '["a","b"]').
+            // Fall back to comma-split for any legacy data stored as plain CSV.
+            try { vals = JSON.parse(r.value); } catch { vals = r.value.split(','); }
+          } else {
+            vals = [r.value];
+          }
           vals.forEach(v => { distribution[v.trim()] = (distribution[v.trim()] ?? 0) + 1; });
         });
         return { ...base, distribution };

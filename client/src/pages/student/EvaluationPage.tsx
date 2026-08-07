@@ -39,9 +39,12 @@ export function EvaluationPage() {
   };
 
   const handleMultiAnswer = (questionId: string, optionValue: string, checked: boolean) => {
-    const current = answers[questionId]?.split(',').filter(Boolean) ?? [];
+    // Parse from JSON array; fall back to empty array for first selection
+    let current: string[] = [];
+    try { current = JSON.parse(answers[questionId] ?? '[]'); } catch { current = []; }
     const updated = checked ? [...current, optionValue] : current.filter(v => v !== optionValue);
-    handleAnswer(questionId, updated.join(','));
+    // Serialise as a JSON array so option values containing commas are safe
+    handleAnswer(questionId, JSON.stringify(updated));
   };
 
   const handleSubmit = () => {
@@ -120,7 +123,9 @@ export function EvaluationPage() {
           {q.type === 'multi_choice' && q.options && (
             <div className="space-y-2">
               {q.options.map(opt => {
-                const selected = answers[q.id]?.split(',').includes(opt.value);
+                let parsedSelected: string[] = [];
+                try { parsedSelected = JSON.parse(answers[q.id] ?? '[]'); } catch { parsedSelected = []; }
+                const selected = parsedSelected.includes(opt.value);
                 return (
                   <label key={opt.value} className="flex items-center gap-2 text-sm cursor-pointer">
                     <input type="checkbox" value={opt.value} checked={selected} onChange={(e) => handleMultiAnswer(q.id, opt.value, e.target.checked)} />

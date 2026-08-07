@@ -24,6 +24,9 @@ import { CoursesPage } from '@/pages/admin/CoursesPage';
 import { FormsBuilderPage } from '@/pages/admin/FormsBuilderPage';
 import { EvaluationWindowsPage } from '@/pages/admin/EvaluationWindowsPage';
 import { AuditLogPage } from '@/pages/admin/AuditLogPage';
+import { DepartmentsPage } from '@/pages/admin/DepartmentsPage';
+import { TermsPage } from '@/pages/admin/TermsPage';
+import { EnrollmentsPage } from '@/pages/admin/EnrollmentsPage';
 
 export const router = createBrowserRouter([
   // Public routes
@@ -68,8 +71,11 @@ export const router = createBrowserRouter([
         { path: 'dashboard', element: <AdminDashboardPage /> },
         { path: 'users', element: <UsersPage /> },
         { path: 'courses', element: <CoursesPage /> },
+        { path: 'departments', element: <DepartmentsPage /> },
+        { path: 'terms', element: <TermsPage /> },
         { path: 'forms', element: <FormsBuilderPage /> },
         { path: 'windows', element: <EvaluationWindowsPage /> },
+        { path: 'enrollments', element: <EnrollmentsPage /> },
         { path: 'audit', element: <AuditLogPage /> },
       ]},
     ],

@@ -4,7 +4,8 @@ import { useAuthStore } from '@/features/auth/store';
 import { authApi } from '@/features/auth/api';
 import {
   LayoutDashboard, BookOpen, ClipboardList,
-  Users, LogOut, Menu, X, FileText, Bell, Shield
+  Users, LogOut, Menu, X, FileText, Bell, Shield,
+  Building2, CalendarDays, UserCheck,
 } from 'lucide-react';
 
 type NavItem = { label: string; href: string; icon: React.ReactNode };
@@ -17,13 +18,24 @@ function getNavItems(role: string): NavItem[] {
   if (role === 'instructor') return [
     { label: 'Dashboard', href: '/instructor/dashboard', icon: <LayoutDashboard size={18} /> },
   ];
-  // admin / dept_head
+  if (role === 'dept_head') {
+    // Department heads see a limited admin view — no user management or audit log
+    return [
+      { label: 'Dashboard', href: '/admin/dashboard', icon: <LayoutDashboard size={18} /> },
+      { label: 'Courses', href: '/admin/courses', icon: <BookOpen size={18} /> },
+      { label: 'Eval Windows', href: '/admin/windows', icon: <Bell size={18} /> },
+    ];
+  }
+  // admin — full access
   return [
     { label: 'Dashboard', href: '/admin/dashboard', icon: <LayoutDashboard size={18} /> },
     { label: 'Users', href: '/admin/users', icon: <Users size={18} /> },
     { label: 'Courses', href: '/admin/courses', icon: <BookOpen size={18} /> },
+    { label: 'Departments', href: '/admin/departments', icon: <Building2 size={18} /> },
+    { label: 'Terms', href: '/admin/terms', icon: <CalendarDays size={18} /> },
     { label: 'Forms Builder', href: '/admin/forms', icon: <FileText size={18} /> },
     { label: 'Eval Windows', href: '/admin/windows', icon: <Bell size={18} /> },
+    { label: 'Enrollments', href: '/admin/enrollments', icon: <UserCheck size={18} /> },
     { label: 'Audit Log', href: '/admin/audit', icon: <Shield size={18} /> },
   ];
 }

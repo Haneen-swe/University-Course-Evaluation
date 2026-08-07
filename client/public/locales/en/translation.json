@@ -1,0 +1,214 @@
+{
+  "app": {
+    "name": "University Course Evaluation System",
+    "tagline": "UCES"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "courses": "Courses",
+    "departments": "Departments",
+    "terms": "Terms",
+    "formsBuilder": "Forms Builder",
+    "evalWindows": "Eval Windows",
+    "enrollments": "Enrollments",
+    "auditLog": "Audit Log",
+    "evaluations": "Evaluations",
+    "logout": "Log out"
+  },
+  "auth": {
+    "login": "Sign In",
+    "logout": "Log out",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset Password",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "emailPlaceholder": "you@university.edu",
+    "passwordPlaceholder": "Your password",
+    "loginButton": "Sign In",
+    "sendResetLink": "Send Reset Link",
+    "backToLogin": "Back to sign in",
+    "resetLinkSent": "If that email exists, a reset link has been sent.",
+    "resetSuccess": "Password reset successfully. Please sign in.",
+    "newPasswordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "setPasswordButton": "Set New Password",
+    "errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "accountInactive": "Your account is inactive. Contact your administrator.",
+      "noPassword": "This account does not have a password set. Please contact your administrator."
+    }
+  },
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "actions": "Actions",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "active": "Active",
+    "inactive": "Inactive",
+    "all": "All",
+    "noResults": "No results found.",
+    "error": "An error occurred. Please try again.",
+    "success": "Success",
+    "required": "This field is required.",
+    "next": "Next",
+    "previous": "Previous",
+    "page": "Page",
+    "of": "of",
+    "submit": "Submit",
+    "submitting": "Submitting…",
+    "back": "Back"
+  },
+  "users": {
+    "title": "Users",
+    "createUser": "Create User",
+    "editUser": "Edit User",
+    "deleteUser": "Delete User",
+    "deleteConfirm": "Are you sure you want to deactivate this user? They will no longer be able to log in.",
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "role": "Role",
+      "department": "Department",
+      "password": "Password",
+      "isActive": "Active"
+    },
+    "roles": {
+      "student": "Student",
+      "instructor": "Instructor",
+      "dept_head": "Department Head",
+      "admin": "Administrator"
+    }
+  },
+  "courses": {
+    "title": "Courses",
+    "createCourse": "Create Course",
+    "editCourse": "Edit Course",
+    "archiveCourse": "Archive Course",
+    "archiveConfirm": "Are you sure you want to archive this course?",
+    "fields": {
+      "code": "Course Code",
+      "title": "Title",
+      "description": "Description",
+      "department": "Department",
+      "isArchived": "Archived"
+    }
+  },
+  "departments": {
+    "title": "Departments",
+    "createDepartment": "Create Department",
+    "editDepartment": "Edit Department",
+    "fields": {
+      "name": "Name",
+      "code": "Code",
+      "headId": "Department Head"
+    }
+  },
+  "terms": {
+    "title": "Terms",
+    "createTerm": "Create Term",
+    "editTerm": "Edit Term",
+    "fields": {
+      "name": "Name",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "isActive": "Active"
+    }
+  },
+  "forms": {
+    "title": "Forms Builder",
+    "createForm": "New Form Template",
+    "editForm": "Edit Form",
+    "publishForm": "Publish",
+    "cloneForm": "Clone",
+    "addQuestion": "Add Question",
+    "editQuestion": "Edit Question",
+    "deleteQuestion": "Delete Question",
+    "published": "Published",
+    "draft": "Draft",
+    "questionTypes": {
+      "likert": "Likert Scale",
+      "single_choice": "Single Choice",
+      "multi_choice": "Multiple Choice",
+      "open_text": "Open Text"
+    },
+    "fields": {
+      "title": "Template Title",
+      "questionText": "Question Text",
+      "type": "Type",
+      "isRequired": "Required",
+      "scaleMin": "Scale Min",
+      "scaleMax": "Scale Max",
+      "options": "Options"
+    }
+  },
+  "evalWindows": {
+    "title": "Evaluation Windows",
+    "releaseResults": "Release Results",
+    "releaseConfirm": "Are you sure you want to release results for this offering?",
+    "fields": {
+      "offering": "Offering",
+      "startDate": "Window Start",
+      "endDate": "Window End",
+      "evalForm": "Evaluation Form",
+      "minResponses": "Min Responses",
+      "resultsReleased": "Results Released"
+    }
+  },
+  "enrollments": {
+    "title": "Enrollments",
+    "enrollStudent": "Enroll Student",
+    "removeEnrollment": "Remove",
+    "removeConfirm": "Are you sure you want to remove this student from the offering?"
+  },
+  "evaluations": {
+    "title": "My Evaluations",
+    "pending": "Pending",
+    "completed": "Completed",
+    "submitButton": "Submit Evaluation",
+    "submitting": "Submitting…",
+    "submitted": "Thank you!",
+    "submittedMessage": "Your evaluation has been submitted anonymously. Your identity is never linked to your responses.",
+    "anonymous": "Your responses are fully anonymous. Your identity will never be linked to your answers.",
+    "backToList": "Back to evaluations",
+    "notFound": "Evaluation not found or window is closed.",
+    "required": "This question is required.",
+    "notAtAll": "Not at all",
+    "stronglyAgree": "Strongly agree",
+    "noSubmitOnce": "Once submitted, you cannot modify your responses."
+  },
+  "auditLog": {
+    "title": "Audit Log",
+    "fields": {
+      "timestamp": "Timestamp",
+      "actor": "Actor",
+      "action": "Action",
+      "target": "Target",
+      "ip": "IP Address"
+    },
+    "filters": {
+      "action": "Filter by action",
+      "allActions": "All actions"
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "responseRate": "Response Rate",
+    "submissions": "Submissions",
+    "enrolled": "Enrolled",
+    "mean": "Mean",
+    "median": "Median",
+    "stdDev": "Std Dev",
+    "distribution": "Distribution",
+    "resultsNotReleased": "Results not yet released"
+  }
+}

@@ -47,7 +47,7 @@ export const authService = {
     }
     if (!user.passwordHash) {
       throw AppError.unauthorized(
-        'This account uses SSO. Please log in via your institution.'
+        'This account does not have a password set. Please contact your administrator.'
       );
     }
 

@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { requestLogger } from './middleware/requestLogger';
 import { errorHandler } from './middleware/errorHandler';
 import { notFoundHandler } from './middleware/notFoundHandler';
+import { generalLimiter } from './middleware/rateLimiter';
 import { authRouter } from './modules/auth/auth.router';
 import { usersRouter } from './modules/users/users.router';
 import { departmentsRouter } from './modules/departments/departments.router';
@@ -43,9 +44,16 @@ export function createApp() {
     })
   );
 
+  // Parse comma-separated CLIENT_URL to support multiple origins
+  // (e.g. http://localhost:5173,http://127.0.0.1:5173 for dev/test)
+  const allowedOrigins = env.CLIENT_URL
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+
   app.use(
     cors({
-      origin: env.CLIENT_URL,
+      origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
       allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -58,6 +66,9 @@ export function createApp() {
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(requestLogger);
+
+  // ── General rate limiter (applied to all /api routes) ───────
+  app.use('/api', generalLimiter);
 
   // ── Health check ─────────────────────────────────────────────
   app.get('/api/v1/health', (_req, res) => {

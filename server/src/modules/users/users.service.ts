@@ -6,7 +6,7 @@ import { usersRepository } from './users.repository';
 import { CreateUserDto, UpdateUserDto, UserQueryDto } from './users.schema';
 
 export const usersService = {
-  async list(query: UserQueryDto, actorId: string) {
+  async list(query: UserQueryDto) {
     const { skip, take, page, limit } = parsePagination(query);
     const [users, total] = await usersRepository.findMany({ ...query, skip, take });
     return buildPaginatedResult(users, total, page, limit);

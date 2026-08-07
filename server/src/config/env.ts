@@ -4,7 +4,9 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(3001),
   APP_URL: z.string().url().default('http://localhost:3001'),
-  CLIENT_URL: z.string().url().default('http://localhost:5173'),
+  // Accept a comma-separated list of allowed origins so that both
+  // http://localhost:5173 and http://127.0.0.1:5173 work in dev/test.
+  CLIENT_URL: z.string().default('http://localhost:5173'),
 
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
 

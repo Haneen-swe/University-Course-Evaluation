@@ -5,7 +5,7 @@ import { CreateUserDto, UpdateUserDto, UserQueryDto } from './users.schema';
 export const usersController = {
   async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await usersService.list(req.query as UserQueryDto, req.user!.id);
+      const result = await usersService.list(req.query as UserQueryDto);
       res.json({ success: true, ...result });
     } catch (err) { next(err); }
   },

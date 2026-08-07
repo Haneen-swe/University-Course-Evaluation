@@ -1,18 +1,21 @@
 import { z } from 'zod';
 
+const passwordSchema = z
+  .string()
+  .min(8, 'Password must be at least 8 characters')
+  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+  .regex(/[0-9]/, 'Password must contain at least one number');
+
 export const createUserSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1).max(100),
   lastName: z.string().min(1).max(100),
   role: z.enum(['student', 'instructor', 'dept_head', 'admin']),
   departmentId: z.string().uuid().optional(),
-  password: z
-    .string()
-    .min(8)
-    .regex(/[A-Z]/, 'Must contain uppercase')
-    .regex(/[a-z]/, 'Must contain lowercase')
-    .regex(/[0-9]/, 'Must contain number')
-    .optional(),
+  // Password is required for local accounts. Omitting it creates a
+  // locked account with no login path (no SSO is implemented).
+  password: passwordSchema,
 });
 
 export const updateUserSchema = z.object({
